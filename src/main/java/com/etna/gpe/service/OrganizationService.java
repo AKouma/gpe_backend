@@ -45,7 +45,7 @@ public class OrganizationService {
     }
 
 
-    public void createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
+    public Organization createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
         OrganizationDto dto = getOrganizationByEmail(organizationDto.getOrganizationEmail());
         boolean isNew = false;
         if (dto == null) {
@@ -53,7 +53,7 @@ public class OrganizationService {
             isNew = true;
         }
         setDto(organizationDto, dto);
-        organizationRepository.save(new Organization(dto, isNew));
+        return organizationRepository.save(new Organization(dto, isNew));
     }
 
     public void deleteOrganization(@NonNull String email) {
@@ -91,5 +91,9 @@ public class OrganizationService {
                 dto.getOrganizationUpdateDate());
         dto.setOrganizationWebSite(organization.getOrganizationWebSite() != null ? organization.getOrganizationWebSite() :
                 dto.getOrganizationWebSite());
+        dto.setOrganizationMatricule(organization.getOrganizationMatricule() != null ? organization.getOrganizationMatricule() : 
+        	dto.getOrganizationMatricule());
+        dto.setOrganizationChiefFirstname(organization.getOrganizationChiefFirstname() != null ? organization.getOrganizationChiefFirstname() :
+        	dto.getOrganizationChiefFirstname());
     }
 }

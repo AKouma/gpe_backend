@@ -45,18 +45,16 @@ public class ParticularService {
     }
 
 
-    public void createOrUpdateuParticular(@NonNull String email, @NonNull String
-            password, String name, String firstName, String phoneNumber) {
+    public Particular createOrUpdateuParticular(@NonNull ParticularDto particularDto) {
         ParticularDto
-                dto = getParticularByEmail(email);
+                dto = getParticularByEmail(particularDto.getParticularEmail());
         boolean isNew = false;
         if (dto == null) {
             dto = new ParticularDto();
             isNew = true;
         }
-        setDto(email, password, name,
-                firstName, phoneNumber, dto);
-        particularRepository.save(new Particular(dto,
+        setDto(particularDto, dto);
+        return particularRepository.save(new Particular(dto,
                 isNew));
     }
 
@@ -69,13 +67,12 @@ public class ParticularService {
     }
 
 
-    private void setDto(@NonNull String email, @NonNull String password, String name,
-                        String firstName, String phoneNumber, ParticularDto dto) {
-        dto.setParticularEmail(email);
-        dto.setParticularPassword(password);
-        dto.setParticularName(name != null ? name : dto.getParticularName());
-        dto.setParticularFirstName(firstName != null ? firstName : dto.getParticularFirstName());
-        dto.setParticularPhonenumber(phoneNumber != null ? phoneNumber : dto.getParticularPhonenumber());
+    private void setDto(@NonNull ParticularDto particularDto, ParticularDto dto) {
+        dto.setParticularEmail(particularDto.getParticularEmail());
+        dto.setParticularPassword(particularDto.getParticularPassword());
+        dto.setParticularLocation(particularDto.getParticularLocation() != null ? particularDto.getParticularLocation() : dto.getParticularLocation());
+        dto.setParticularName(particularDto.getParticularName() != null ? particularDto.getParticularName() : dto.getParticularName());
+        dto.setParticularFirstName(particularDto.getParticularFirstName() != null ? particularDto.getParticularFirstName() : dto.getParticularFirstName());
     }
 
 }

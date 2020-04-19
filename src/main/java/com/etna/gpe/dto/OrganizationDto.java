@@ -1,26 +1,30 @@
 package com.etna.gpe.dto;
 
 
+import java.util.Date;
+
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.model.Organization;
 
 public class OrganizationDto {
 	int organizationId;
-	String organizationName;
-	String organizationChiefName;
-	String organizationPassword;
-	String organizationLocation;
-	String organizationLogo;
-	String organizationDescription;
-	String organizationWebSite;
-	String organizationPhoneNumber;
-	String organizationEmail;
-	String organizationCreationDate;
-	String organizationCreateDate;
-	String organizationUpdateDate;
-	String organizationDeleteDate;
-	boolean organizationIsDeleted;
+	private String organizationName;
+	private String organizationChiefName;
+	private String organizationChiefFirstname;
+	private String organizationPassword;
+	private String organizationLocation;
+	private String organizationMatricule;
+	private String organizationLogo;
+	private String organizationDescription;
+	private String organizationWebSite;
+	private String organizationPhoneNumber;
+	private String organizationEmail;
+	private String organizationCreationDate;
+	private Date organizationCreateDate;
+	private Date organizationUpdateDate;
+	private Date organizationDeleteDate;
+	private boolean organizationIsDeleted;
 	
 	public OrganizationDto() {
 		//empty consteuctor
@@ -42,19 +46,8 @@ public class OrganizationDto {
 		this.setOrganizationPhoneNumber(organization.getOrganizationPhoneNumber());
 		this.setOrganizationUpdateDate(organization.getOrganizationUpdateDate());
 		this.setOrganizationWebSite(organization.getOrganizationWebSite());
-	}
-
-	@Override
-	public String toString() {
-		return "OrganizationDto [organizationId=" + organizationId + ", organizationName=" + organizationName
-				+ ", organizationChiefName=" + organizationChiefName + ", organizationPassword=" + organizationPassword
-				+ ", organizationLocation=" + organizationLocation + ", organizationLogo=" + organizationLogo
-				+ ", organizationDescription=" + organizationDescription + ", organizationWebSite="
-				+ organizationWebSite + ", organizationPhoneNumber=" + organizationPhoneNumber + ", organizationEmail="
-				+ organizationEmail + ", organizationCreationDate=" + organizationCreationDate
-				+ ", organizationCreateDate=" + organizationCreateDate + ", organizationUpdateDate="
-				+ organizationUpdateDate + ", organizationDeleteDate=" + organizationDeleteDate
-				+ ", organizationIsDeleted=" + organizationIsDeleted + "]";
+		this.setOrganizationMatricule(organization.getOrganizationMatricule());
+		this.setOrganizationChiefFirstname(organization.getOrganizationChiefFirstname());
 	}
 
 	public int getOrganizationId() {
@@ -81,6 +74,14 @@ public class OrganizationDto {
 		this.organizationChiefName = organizationChiefName;
 	}
 
+	public String getOrganizationChiefFirstname() {
+		return organizationChiefFirstname;
+	}
+
+	public void setOrganizationChiefFirstname(String organizationChiefFirstname) {
+		this.organizationChiefFirstname = organizationChiefFirstname;
+	}
+
 	public String getOrganizationPassword() {
 		return organizationPassword;
 	}
@@ -95,6 +96,14 @@ public class OrganizationDto {
 
 	public void setOrganizationLocation(String organizationLocation) {
 		this.organizationLocation = organizationLocation;
+	}
+
+	public String getOrganizationMatricule() {
+		return organizationMatricule;
+	}
+
+	public void setOrganizationMatricule(String organizationMatricule) {
+		this.organizationMatricule = organizationMatricule;
 	}
 
 	public String getOrganizationLogo() {
@@ -145,27 +154,27 @@ public class OrganizationDto {
 		this.organizationCreationDate = organizationCreationDate;
 	}
 
-	public String getOrganizationCreateDate() {
+	public Date getOrganizationCreateDate() {
 		return organizationCreateDate;
 	}
 
-	public void setOrganizationCreateDate(String organizationCreateDate) {
+	public void setOrganizationCreateDate(Date organizationCreateDate) {
 		this.organizationCreateDate = organizationCreateDate;
 	}
 
-	public String getOrganizationUpdateDate() {
+	public Date getOrganizationUpdateDate() {
 		return organizationUpdateDate;
 	}
 
-	public void setOrganizationUpdateDate(String organizationUpdateDate) {
+	public void setOrganizationUpdateDate(Date organizationUpdateDate) {
 		this.organizationUpdateDate = organizationUpdateDate;
 	}
 
-	public String getOrganizationDeleteDate() {
+	public Date getOrganizationDeleteDate() {
 		return organizationDeleteDate;
 	}
 
-	public void setOrganizationDeleteDate(String organizationDeleteDate) {
+	public void setOrganizationDeleteDate(Date organizationDeleteDate) {
 		this.organizationDeleteDate = organizationDeleteDate;
 	}
 
@@ -176,5 +185,5 @@ public class OrganizationDto {
 	public void setOrganizationIsDeleted(boolean organizationIsDeleted) {
 		this.organizationIsDeleted = organizationIsDeleted;
 	}
-	
+
 }

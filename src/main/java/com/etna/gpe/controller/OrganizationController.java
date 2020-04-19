@@ -1,6 +1,7 @@
 package com.etna.gpe.controller;
 
 import com.etna.gpe.dto.OrganizationDto;
+import com.etna.gpe.model.Organization;
 import com.etna.gpe.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class OrganizationController {
     }
 
     @PostMapping("/create_organization")
-    void createOrganization(@RequestBody OrganizationDto organizationDto) {
-        organizationService.createOrUpdateuOrganization(organizationDto);
+    Organization createOrganization(@RequestBody OrganizationDto organizationDto) {
+        return organizationService.createOrUpdateuOrganization(organizationDto);
     }
 
     @GetMapping("/get_organization")

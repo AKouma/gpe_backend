@@ -1,6 +1,7 @@
 package com.etna.gpe.controller;
 
 import com.etna.gpe.dto.ParticularDto;
+import com.etna.gpe.model.Particular;
 import com.etna.gpe.service.ParticularService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,8 @@ public class ParticularController {
     }
 
     @PostMapping("/create_particular")
-    void createParticular(@RequestBody ParticularDto particularDto) {
-        particularService.createOrUpdateuParticular(particularDto.getParticularEmail(
-                ), particularDto.getParticularPassword(), particularDto.getParticularName(),
-                particularDto.getParticularFirstName(),
-                particularDto.getParticularPhonenumber());
+    Particular createParticular(@RequestBody ParticularDto particularDto) {
+       return particularService.createOrUpdateuParticular(particularDto);
     }
 
     @GetMapping("/get_particular")
