@@ -90,7 +90,7 @@ public class Organization {
 	}
 	
 	public Organization(@NonNull OrganizationDto organizationDto, boolean isNew) {
-		if(isNew)
+		if(!isNew)
 			this.setOrganizationId(organizationDto.getOrganizationId());
 		this.setOrganizationIsDeleted(organizationDto.isOrganizationIsDeleted());
 		this.setOrganizationLocation(organizationDto.getOrganizationLocation());

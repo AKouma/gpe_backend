@@ -30,7 +30,8 @@ public class ParticularController {
         return
                 particularService.getParticularByEmail(email);
     }
-
+    
+  //todo post a requestbodyn and not delete really but put boolean to true
     @PostMapping("/delete_particulier")
     void deleteparticular(@RequestParam(value = "email") String email) {
         particularService.deleteParticular(email);

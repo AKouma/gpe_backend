@@ -31,6 +31,7 @@ public class OrganizationController {
                 organizationService.getOrganizationByEmail(email);
     }
 
+    //todo post a requestbodyn and not delete really but put boolean to true
     @PostMapping("delete_organization")
     void
     deleteparticular(@RequestParam(value = "email") String email) {
