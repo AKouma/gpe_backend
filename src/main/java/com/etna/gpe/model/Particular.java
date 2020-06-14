@@ -18,27 +18,27 @@ public class Particular {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "particular_id")
-    int particularId;
+    private int particularId;
 
     @Column(name = "particular_name")
-    String particularName;
+    private String particularName;
 
     @Column(name = "particular_first_name")
-    String particularFirstName;
+    private String particularFirstName;
 
     @NotBlank
     @Column(name = "particular_password", nullable = false)
-    String particularPassword;
+    private String particularPassword;
 
     @Column(name = "particular_phone_number")
-    String particularPhonenumber;
+    private String particularPhonenumber;
     
     @Column(name = "particular_location")
-    String particularLocation;
+    private String particularLocation;
 
 	@NotBlank
     @Column(name = "particular_email", nullable = false)
-    String particularEmail;
+    private String particularEmail;
 
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,7 +53,7 @@ public class Particular {
 	@UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "particular_delete_date")
-    Date particularDeleteDate;
+    private Date particularDeleteDate;
 
     @Column(name = "particular_is_deleted")
     boolean particularIsDeleted = false;

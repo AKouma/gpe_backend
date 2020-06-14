@@ -1,8 +1,12 @@
 package com.etna.gpe.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.dto.EventDto;
@@ -15,47 +19,54 @@ public class Event {
 	@Id
 	@Column(name = "event_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int eventId;
+	private int eventId;
 	
 	@NotBlank
 	@Column(name ="event_title")
-	String eventTitle;
+	private String eventTitle;
 	
 	@NotBlank
 	@Column(name ="event_description")
-	String eventDescription;
+	private String eventDescription;
 	
+	@CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="event_create_date")
-	String eventCreateDate;
+	private Date eventCreateDate;
 	
+	@UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="event_update_date")
-	String eventUpdateDate;
+	private Date eventUpdateDate;
 	
+	@UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="event_delete_date")
-	String eventDeleteDate;
+	private Date eventDeleteDate;
 	
 	@NotBlank
 	@Column(name ="event_place")
-	String eventPlace;
+	private String eventPlace;
 	
 	@NotBlank
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="event_date")
-	String eventDate;
+	private Date eventDate;
 	
 	@Column(name ="event_is_deleted")
-	boolean eventIsDeleted;
+	private boolean eventIsDeleted;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn
-	EventMaker eventMaker;
+	private EventMaker eventMaker;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn
-	Community community;
+	private Community community;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH})
 	@JoinColumn
-	Category category;
+	private Category category;
 	
 	public Event(@NonNull EventDto eventDto) {
 		this.setCategory(eventDto.getCategory());
@@ -71,6 +82,17 @@ public class Event {
 		this.setEventTitle(eventDto.getEventTitle());
 		this.setEventUpdateDate(eventDto.getEventUpdateDate());
 	}
+
+	@Override
+	public String toString() {
+		return "Event [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventDescription=" + eventDescription
+				+ ", eventCreateDate=" + eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate="
+				+ eventDeleteDate + ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted="
+				+ eventIsDeleted + ", eventMaker=" + eventMaker + ", community=" + community + ", category=" + category
+				+ "]";
+	}
+
+
 
 	public int getEventId() {
 		return eventId;
@@ -96,27 +118,27 @@ public class Event {
 		this.eventDescription = eventDescription;
 	}
 
-	public String getEventCreateDate() {
+	public Date getEventCreateDate() {
 		return eventCreateDate;
 	}
 
-	public void setEventCreateDate(String eventCreateDate) {
+	public void setEventCreateDate(Date eventCreateDate) {
 		this.eventCreateDate = eventCreateDate;
 	}
 
-	public String getEventUpdateDate() {
+	public Date getEventUpdateDate() {
 		return eventUpdateDate;
 	}
 
-	public void setEventUpdateDate(String eventUpdateDate) {
+	public void setEventUpdateDate(Date eventUpdateDate) {
 		this.eventUpdateDate = eventUpdateDate;
 	}
 
-	public String getEventDeleteDate() {
+	public Date getEventDeleteDate() {
 		return eventDeleteDate;
 	}
 
-	public void setEventDeleteDate(String eventDeleteDate) {
+	public void setEventDeleteDate(Date eventDeleteDate) {
 		this.eventDeleteDate = eventDeleteDate;
 	}
 
@@ -128,11 +150,11 @@ public class Event {
 		this.eventPlace = eventPlace;
 	}
 
-	public String getEventDate() {
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(String eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 
@@ -167,5 +189,5 @@ public class Event {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
 }

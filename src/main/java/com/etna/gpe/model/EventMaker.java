@@ -21,6 +21,16 @@ public class EventMaker {
 	
 	@Column(name = "event_maker_is_deleted")
 	String eventMakerIsDeleted;
+	
+	public EventMaker() {}
+	
+	
+
+	@Override
+	public String toString() {
+		return "EventMaker [eventmakerId=" + eventmakerId + ", particular=" + particular + ", organization="
+				+ organization + ", eventMakerIsDeleted=" + eventMakerIsDeleted + "]";
+	}
 
 	public int getEventmakerId() {
 		return eventmakerId;

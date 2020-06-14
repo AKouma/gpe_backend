@@ -1,5 +1,6 @@
 package com.etna.gpe.service;
 
+import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.dto.ParticularDto;
 import com.etna.gpe.model.Particular;
 import com.etna.gpe.repository.ParticularRepository;
@@ -17,6 +18,9 @@ public class ParticularService {
 
     @Autowired
     ParticularRepository particularRepository;
+    
+    @Autowired
+    EventService eventService;
 
     public List<ParticularDto> getAllParticular() {
         Iterator<Particular> it = particularRepository.findAll().iterator();
@@ -39,9 +43,17 @@ public class ParticularService {
         return particular != null ? new ParticularDto(particular) : new ParticularDto();
     }
 
-    public ParticularDto getParticularByEmailAndPassword(@NonNull String email, @NonNull String password) {
-        Particular particular = particularRepository.findParticularByparticularEmailAndParticularPassword(email, password);
-        return particular != null ? new ParticularDto(particular) : new ParticularDto();
+    public AuthenResponseDto getParticularByEmailAndPassword(@NonNull String email, @NonNull String password) {
+    	AuthenResponseDto authenResponseDto = new AuthenResponseDto();
+        Particular particular = particularRepository
+        		.findParticularByparticularEmailAndParticularPassword(email, password);
+        authenResponseDto.setParticularDto(particular != null ? 
+        		new ParticularDto(particular) : new ParticularDto());
+        //here we set all events that organization made
+		 authenResponseDto.setEvents(eventService.getAllEventsUserMade(particular));
+		 //her we set all events that organization participate  has benevols
+		 //Todo
+        return authenResponseDto;
     }
 
 
@@ -70,9 +82,12 @@ public class ParticularService {
     private void setDto(@NonNull ParticularDto particularDto, ParticularDto dto) {
         dto.setParticularEmail(particularDto.getParticularEmail());
         dto.setParticularPassword(particularDto.getParticularPassword());
-        dto.setParticularLocation(particularDto.getParticularLocation() != null ? particularDto.getParticularLocation() : dto.getParticularLocation());
-        dto.setParticularName(particularDto.getParticularName() != null ? particularDto.getParticularName() : dto.getParticularName());
-        dto.setParticularFirstName(particularDto.getParticularFirstName() != null ? particularDto.getParticularFirstName() : dto.getParticularFirstName());
+        dto.setParticularLocation(particularDto.getParticularLocation() != null 
+        		? particularDto.getParticularLocation() : dto.getParticularLocation());
+        dto.setParticularName(particularDto.getParticularName() != null 
+        		? particularDto.getParticularName() : dto.getParticularName());
+        dto.setParticularFirstName(particularDto.getParticularFirstName() != null 
+        		? particularDto.getParticularFirstName() : dto.getParticularFirstName());
     }
 
 }

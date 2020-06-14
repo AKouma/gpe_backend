@@ -1,5 +1,7 @@
 package com.etna.gpe.dto;
 
+import java.util.Date;
+
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.model.Category;
@@ -12,11 +14,11 @@ public class EventDto {
 	int eventId;
 	String eventTitle;
 	String eventDescription;
-	String eventCreateDate;
-	String eventUpdateDate;
-	String eventDeleteDate;
+	Date eventCreateDate;
+	Date eventUpdateDate;
+	Date eventDeleteDate;
 	String eventPlace;
-	String eventDate;
+	Date eventDate;
 	boolean eventIsDeleted;
 	EventMaker eventMaker;
 	Community community;
@@ -24,7 +26,7 @@ public class EventDto {
 	
 	
 
-	protected EventDto() {
+	public EventDto() {
 	}
 	
 	public EventDto(@NonNull Event event) {
@@ -77,27 +79,27 @@ public class EventDto {
 		this.eventDescription = eventDescription;
 	}
 
-	public String getEventCreateDate() {
+	public Date getEventCreateDate() {
 		return eventCreateDate;
 	}
 
-	public void setEventCreateDate(String eventCreateDate) {
+	public void setEventCreateDate(Date eventCreateDate) {
 		this.eventCreateDate = eventCreateDate;
 	}
 
-	public String getEventUpdateDate() {
+	public Date getEventUpdateDate() {
 		return eventUpdateDate;
 	}
 
-	public void setEventUpdateDate(String eventUpdateDate) {
+	public void setEventUpdateDate(Date eventUpdateDate) {
 		this.eventUpdateDate = eventUpdateDate;
 	}
 
-	public String getEventDeleteDate() {
+	public Date getEventDeleteDate() {
 		return eventDeleteDate;
 	}
 
-	public void setEventDeleteDate(String eventDeleteDate) {
+	public void setEventDeleteDate(Date eventDeleteDate) {
 		this.eventDeleteDate = eventDeleteDate;
 	}
 
@@ -109,11 +111,11 @@ public class EventDto {
 		this.eventPlace = eventPlace;
 	}
 
-	public String getEventDate() {
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(String eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 

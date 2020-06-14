@@ -5,10 +5,12 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/EventDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/CategoryRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Message.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/AuthenDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/ServletInitializer.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Organization.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/OrganizationRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Community.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/AuthenResponseDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/ParticularDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Particular.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/EventMaker.java
@@ -18,7 +20,9 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/BenevolRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/ParticularRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/ParticularController.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/EventController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/OrganizationService.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/EventService.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/EventRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/OrganizationController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/ParticularService.java
