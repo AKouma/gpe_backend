@@ -5,9 +5,11 @@ import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.service.OrganizationService;
 import com.etna.gpe.service.ParticularService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +22,10 @@ public class AuthentifacationController {
     @Autowired
     OrganizationService organizationService;
 
+    
+    //Todo have to handle bad credentials with my custom exceptions
     @PostMapping("/login_organization")
+    @ResponseStatus(HttpStatus.OK)
     AuthenResponseDto loginOrganization(@RequestBody AuthenDto authenDto) {
     	if(authenDto == null || authenDto.getEmail() == null || authenDto.getPassword() == null )
     		return null; // have to return miss paramters exception
@@ -28,7 +33,9 @@ public class AuthentifacationController {
                 organizationService.getOrganizationByEmailAndPassword(authenDto.getEmail(), authenDto.getPassword());
     }
 
+    //Todo have to handle bad credentials with my custom exceptions
     @PostMapping("/login_particular")
+    @ResponseStatus(HttpStatus.OK)
     AuthenResponseDto loginParticular(@RequestBody AuthenDto authenDto) {
     	if(authenDto == null || authenDto.getEmail() == null || authenDto.getPassword() == null )
     		return null; // have to return miss paramters exception
