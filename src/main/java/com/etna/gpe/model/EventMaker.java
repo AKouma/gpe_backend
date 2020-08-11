@@ -12,15 +12,13 @@ public class EventMaker {
 	int eventmakerId;
 	
 	@ManyToOne
-	@JoinColumn
 	Particular particular;
 	
 	@ManyToOne
-	@JoinColumn
 	Organization organization;
 	
 	@Column(name = "event_maker_is_deleted")
-	String eventMakerIsDeleted;
+	boolean eventMakerIsDeleted = false;
 	
 	public EventMaker() {}
 	
@@ -56,11 +54,11 @@ public class EventMaker {
 		this.organization = organization;
 	}
 
-	public String getEventMakerIsDeleted() {
+	public boolean getEventMakerIsDeleted() {
 		return eventMakerIsDeleted;
 	}
 
-	public void setEventMakerIsDeleted(String eventMakerIsDeleted) {
+	public void setEventMakerIsDeleted(boolean eventMakerIsDeleted) {
 		this.eventMakerIsDeleted = eventMakerIsDeleted;
 	}
 

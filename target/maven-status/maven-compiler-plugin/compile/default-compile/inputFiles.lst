@@ -12,10 +12,13 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Community.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/AuthenResponseDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/ParticularDto.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ResourceNotExist.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Particular.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ServerError.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/EventMaker.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/AuthentifacationController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/MessageRepository.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ResourceAlreadyExist.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/BenevolHasParticipatedEvent.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/BenevolRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/ParticularRepository.java
@@ -30,3 +33,5 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Benevol.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Event.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/GpeBackendApplication.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/AuthenticateException.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ParametersNotFound.java

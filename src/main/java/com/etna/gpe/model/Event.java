@@ -57,15 +57,12 @@ public class Event {
 	private boolean eventIsDeleted;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST})
-	@JoinColumn
 	private EventMaker eventMaker;
 	
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Community community;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH})
-	@JoinColumn
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Category category;
 	
 	public Event(@NonNull EventDto eventDto) {

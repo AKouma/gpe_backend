@@ -1,5 +1,6 @@
 package com.etna.gpe.controller;
 
+import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.dto.AuthenDto;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.service.OrganizationService;
@@ -23,22 +24,20 @@ public class AuthentifacationController {
     OrganizationService organizationService;
 
     
-    //Todo have to handle bad credentials with my custom exceptions
     @PostMapping("/login_organization")
     @ResponseStatus(HttpStatus.OK)
     AuthenResponseDto loginOrganization(@RequestBody AuthenDto authenDto) {
     	if(authenDto == null || authenDto.getEmail() == null || authenDto.getPassword() == null )
-    		return null; // have to return miss paramters exception
+    		  throw new ParametersNotFound();
         return
                 organizationService.getOrganizationByEmailAndPassword(authenDto.getEmail(), authenDto.getPassword());
     }
 
-    //Todo have to handle bad credentials with my custom exceptions
     @PostMapping("/login_particular")
     @ResponseStatus(HttpStatus.OK)
     AuthenResponseDto loginParticular(@RequestBody AuthenDto authenDto) {
     	if(authenDto == null || authenDto.getEmail() == null || authenDto.getPassword() == null )
-    		return null; // have to return miss paramters exception
+    		throw new ParametersNotFound();
         return
         		particularService.getParticularByEmailAndPassword(authenDto.getEmail(), authenDto.getPassword());
     }
