@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.etna.gpe.controller.customexception.ResourceNotExist;
+import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.dto.ParticularDto;
 import com.etna.gpe.model.Particular;
@@ -68,7 +69,7 @@ public class ParticularService {
 		return authenResponseDto;
 	}
 
-	public Particular createOrUpdateuParticular(@NonNull ParticularDto particularDto) {
+	public ParticularDto createOrUpdateuParticular(@NonNull ParticularDto particularDto) {
 		boolean isNew = false;
 		ParticularDto dto = null;
 
@@ -81,8 +82,15 @@ public class ParticularService {
 				isNew = true;
 			}
 		}
-		setDto(particularDto, dto);
-		return particularRepository.save(new Particular(dto, isNew));
+		 setDto(particularDto, dto);
+		 
+		 Particular particular = particularRepository.save(new Particular(dto, isNew));
+		 
+		 if(particular == null)
+			 throw new ServerError();
+		 
+		 dto = new ParticularDto(particular);
+		 return dto;
 	}
 
 	public void deleteParticular(@NonNull String email) {

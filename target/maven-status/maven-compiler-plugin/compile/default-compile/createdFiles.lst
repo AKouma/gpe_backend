@@ -1,7 +1,6 @@
 com/etna/gpe/repository/CommunityRepository.class
 com/etna/gpe/controller/customexception/ResourceAlreadyExist.class
 com/etna/gpe/model/Community.class
-com/etna/gpe/repository/BenevolRepository.class
 com/etna/gpe/controller/customexception/ResourceNotExist.class
 com/etna/gpe/dto/OrganizationDto.class
 com/etna/gpe/ServletInitializer.class
@@ -9,15 +8,13 @@ com/etna/gpe/repository/EventRepository.class
 com/etna/gpe/repository/ParticularRepository.class
 com/etna/gpe/controller/customexception/ParametersNotFound.class
 com/etna/gpe/service/EventService.class
-com/etna/gpe/model/Benevol.class
 com/etna/gpe/dto/AuthenDto.class
 com/etna/gpe/dto/EventDto.class
-com/etna/gpe/repository/EventMakerRepository.class
 com/etna/gpe/controller/customexception/AuthenticateException.class
 com/etna/gpe/controller/ParticularController.class
 com/etna/gpe/model/Message.class
 com/etna/gpe/GpeBackendApplication.class
-com/etna/gpe/repository/BenevolHasParticipatedEventRespository.class
+com/etna/gpe/model/Particular$PARTICULAR_CATEGORY.class
 com/etna/gpe/repository/CategoryRepository.class
 com/etna/gpe/model/Event.class
 com/etna/gpe/controller/customexception/ServerError.class
@@ -26,9 +23,7 @@ com/etna/gpe/service/OrganizationService.class
 com/etna/gpe/dto/ParticularDto.class
 com/etna/gpe/dto/AuthenResponseDto.class
 com/etna/gpe/model/Particular.class
-com/etna/gpe/model/EventMaker.class
 com/etna/gpe/controller/AuthentifacationController.class
-com/etna/gpe/model/BenevolHasParticipatedEvent.class
 com/etna/gpe/service/ParticularService.class
 com/etna/gpe/repository/MessageRepository.class
 com/etna/gpe/repository/OrganizationRepository.class

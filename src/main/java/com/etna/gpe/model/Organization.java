@@ -103,7 +103,6 @@ public class Organization {
 		this.setOrganizationChiefName(organizationDto.getOrganizationChiefName());
 		this.setOrganizationCreateDate(organizationDto.getOrganizationCreateDate());
 		this.setOrganizationCreationDate(organizationDto.getOrganizationCreationDate());
-		this.setOrganizationDeleteDate(organizationDto.getOrganizationDeleteDate());
 		this.setOrganizationDescription(organizationDto.getOrganizationDescription());
 		this.setOrganizationEmail(organizationDto.getOrganizationEmail());
 		this.setOrganizationMatricule(organizationDto.getOrganizationMatricule());

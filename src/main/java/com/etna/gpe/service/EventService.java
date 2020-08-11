@@ -59,16 +59,20 @@ public class EventService {
 	}
 
 	public EventDto createEvent(@NonNull EventDto dto) {
-		EventDto eventDtoCreate = new EventDto();
 		Event event = new Event(dto);
 		try {
-			eventDtoCreate = new EventDto(eventRepository.save(event));
+			event = eventRepository.save(event);
+			if(event == null)
+				throw new ServerError();
+			
+			dto = new EventDto(event);
+			
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			eventDtoCreate = null;
+			dto = null;
 			throw new ServerError();
 		}
-		return eventDtoCreate;
+		return dto;
 	}
 
 	public List<EventDto> getAllEvents() {

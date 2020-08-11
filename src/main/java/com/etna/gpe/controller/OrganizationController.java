@@ -2,7 +2,6 @@ package com.etna.gpe.controller;
 
 import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.dto.OrganizationDto;
-import com.etna.gpe.model.Organization;
 import com.etna.gpe.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class OrganizationController {
 
     @PostMapping("/create_organization")
     @ResponseStatus(HttpStatus.CREATED)
-    Organization createOrganization(@RequestBody OrganizationDto organizationDto) {
+    OrganizationDto createOrganization(@RequestBody OrganizationDto organizationDto) {
     	if(organizationDto == null)
     		throw new ParametersNotFound();
         return organizationService.createOrUpdateuOrganization(organizationDto);

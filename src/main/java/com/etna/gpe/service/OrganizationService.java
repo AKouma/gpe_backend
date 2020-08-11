@@ -1,6 +1,7 @@
 package com.etna.gpe.service;
 
 import com.etna.gpe.controller.customexception.ResourceNotExist;
+import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.dto.OrganizationDto;
 import com.etna.gpe.model.Organization;
@@ -62,7 +63,7 @@ public class OrganizationService {
 		return authenResponseDto;
 	}
 
-	public Organization createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
+	public OrganizationDto createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
 		OrganizationDto dto = getOrganizationByEmail(organizationDto.getOrganizationEmail());
 		boolean isNew = false;
 		if (dto == null) {
@@ -70,7 +71,14 @@ public class OrganizationService {
 			isNew = true;
 		}
 		setDto(organizationDto, dto);
-		return organizationRepository.save(new Organization(dto, isNew));
+		Organization organization = organizationRepository.save(new Organization(dto, isNew));
+		
+		if(organization == null)
+			throw new ServerError();
+		
+		dto = new OrganizationDto(organization);
+		
+		return dto;
 	}
 
 	public void deleteOrganization(@NonNull String email) {
@@ -93,9 +101,6 @@ public class OrganizationService {
 		dto.setOrganizationCreationDate(
 				organization.getOrganizationCreationDate() != null ? organization.getOrganizationCreationDate()
 						: dto.getOrganizationCreationDate());
-		dto.setOrganizationDeleteDate(
-				organization.getOrganizationDeleteDate() != null ? organization.getOrganizationDeleteDate()
-						: dto.getOrganizationDeleteDate());
 		dto.setOrganizationDescription(
 				organization.getOrganizationDescription() != null ? organization.getOrganizationDescription()
 						: dto.getOrganizationDescription());

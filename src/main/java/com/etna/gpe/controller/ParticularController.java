@@ -2,7 +2,6 @@ package com.etna.gpe.controller;
 
 import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.dto.ParticularDto;
-import com.etna.gpe.model.Particular;
 import com.etna.gpe.service.ParticularService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class ParticularController {
 
 	@PostMapping("/create_particular")
 	@ResponseStatus(HttpStatus.CREATED)
-	Particular createParticular(@RequestBody ParticularDto particularDto) {
+	ParticularDto createParticular(@RequestBody ParticularDto particularDto) {
 		if (particularDto == null)
 			throw new ParametersNotFound();
 		return particularService.createOrUpdateuParticular(particularDto);

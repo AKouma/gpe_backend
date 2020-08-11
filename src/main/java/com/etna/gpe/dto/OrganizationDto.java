@@ -23,7 +23,6 @@ public class OrganizationDto {
 	private String organizationCreationDate;
 	private Date organizationCreateDate;
 	private Date organizationUpdateDate;
-	private Date organizationDeleteDate;
 	private boolean organizationIsDeleted;
 	
 	public OrganizationDto() {
@@ -34,7 +33,6 @@ public class OrganizationDto {
 		this.setOrganizationChiefName(organization.getOrganizationChiefName());
 		this.setOrganizationCreateDate(organization.getOrganizationCreateDate());
 		this.setOrganizationCreationDate(organization.getOrganizationCreationDate());
-		this.setOrganizationDeleteDate(organization.getOrganizationDeleteDate());
 		this.setOrganizationDescription(organization.getOrganizationDescription());
 		this.setOrganizationEmail(organization.getOrganizationEmail());
 		this.setOrganizationId(organization.getOrganizationId());
@@ -168,14 +166,6 @@ public class OrganizationDto {
 
 	public void setOrganizationUpdateDate(Date organizationUpdateDate) {
 		this.organizationUpdateDate = organizationUpdateDate;
-	}
-
-	public Date getOrganizationDeleteDate() {
-		return organizationDeleteDate;
-	}
-
-	public void setOrganizationDeleteDate(Date organizationDeleteDate) {
-		this.organizationDeleteDate = organizationDeleteDate;
 	}
 
 	public boolean isOrganizationIsDeleted() {

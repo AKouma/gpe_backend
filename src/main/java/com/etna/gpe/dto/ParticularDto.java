@@ -15,9 +15,9 @@ public class ParticularDto {
 	 private String particularEmail;
 	 private Date particularCreateDate;
 	 private Date particularUpdateDate;
-	 private Date particularDeleteDate;
 	 private boolean particularIsDeleted;
 	 private String particularLocation;
+	 private String category;
 	 
 	 public ParticularDto() {
 		// TODO Auto-generated constructor stub
@@ -26,7 +26,6 @@ public class ParticularDto {
 	 public ParticularDto(@NonNull Particular particular) {
 		 this.setParticularId(particular.getParticularId());
 		 this.setParticularCreateDate(particular.getParticularCreateDate());
-		 this.setParticularDeleteDate(particular.getParticularDeleteDate());
 		 this.setParticularEmail(particular.getParticularEmail());
 		 this.setParticularFirstName(particular.getParticularFirstName());
 		 this.setParticularIsDeleted(particular.isParticularIsDeleted());
@@ -35,6 +34,7 @@ public class ParticularDto {
 		 this.setParticularPhonenumber(particular.getParticularPhonenumber());
 		 this.setParticularUpdateDate(particular.getParticularUpdateDate());
 		 this.setParticularLocation(particular.getParticularLocation());
+		 this.setCategory(particular.getCategory());
 		}
 
 	public int getParticularId() {
@@ -101,14 +101,6 @@ public class ParticularDto {
 		this.particularUpdateDate = particularUpdateDate;
 	}
 
-	public Date getParticularDeleteDate() {
-		return particularDeleteDate;
-	}
-
-	public void setParticularDeleteDate(Date particularDeleteDate) {
-		this.particularDeleteDate = particularDeleteDate;
-	}
-
 	public boolean isParticularIsDeleted() {
 		return particularIsDeleted;
 	}
@@ -123,6 +115,14 @@ public class ParticularDto {
 
 	public void setParticularLocation(String particularLocation) {
 		this.particularLocation = particularLocation;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	 
 }
