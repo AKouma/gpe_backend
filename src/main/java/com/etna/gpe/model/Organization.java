@@ -1,69 +1,86 @@
 package com.etna.gpe.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.dto.OrganizationDto;
 
 @Entity
 @Table(name ="organization")
-public class Organization {
+public class Organization extends User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "organization_id") 
 	int organizationId;
 	
+	@Column(name="organization_matricule", nullable = false)
+	private String organizationMatricule;
+	
 	@NotBlank
 	@Column(name="organization_name", nullable = false)
-	String organizationName;
+	private String organizationName;
 	
 	@NotBlank
 	@Column(name="organization_chief_name", nullable = false)
-	String organizationChiefName;
+	private String organizationChiefName;
+	
+	@NotBlank
+	@Column(name="organization_chief_firstname", nullable = false)
+	private String organizationChiefFirstname;
 	
 	@NotBlank
 	@Column(name="organization_password", nullable = false)
-	String organizationPassword;
+	private String organizationPassword;
 	
 	@NotBlank
 	@Column(name="organization_location", nullable = false)
-	String organizationLocation;
+	private String organizationLocation;
 	
 	@Column(name="organization_logo")
-	String organizationLogo;
+	private String organizationLogo;
 	
 	@NotBlank
 	@Column(name="organization_description", nullable = false)
-	String organizationDescription;
+	private String organizationDescription;
 	
 	@Column(name="organization_web_site")
-	String organizationWebSite;
+	private String organizationWebSite;
 	
 	@NotBlank
 	@Column(name="organization_phone_number", nullable = false)
-	String organizationPhoneNumber;
+	private String organizationPhoneNumber;
 	
 	@NotBlank
 	@Column(name="organization_email", nullable = false)
-	String organizationEmail;
+	private String organizationEmail;
 	
 	@Column(name="organization_creation_date")
-	String organizationCreationDate;
+	private String organizationCreationDate;
 	
+	@CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="organization_create_date")
-	String organizationCreateDate;
+	private Date organizationCreateDate;
 	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="organization_update_date")
-	String organizationUpdateDate;
+	private Date organizationUpdateDate;
 	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="organization_delete_date")
-	String organizationDeleteDate;
+	private Date organizationDeleteDate;
 	
 	@Column(name="organization_is_deleted")
-	boolean organizationIsDeleted = false;
+	private boolean organizationIsDeleted = false;
 	
 	
 	
@@ -73,7 +90,7 @@ public class Organization {
 	}
 	
 	public Organization(@NonNull OrganizationDto organizationDto, boolean isNew) {
-		if(isNew)
+		if(!isNew)
 			this.setOrganizationId(organizationDto.getOrganizationId());
 		this.setOrganizationIsDeleted(organizationDto.isOrganizationIsDeleted());
 		this.setOrganizationLocation(organizationDto.getOrganizationLocation());
@@ -86,9 +103,10 @@ public class Organization {
 		this.setOrganizationChiefName(organizationDto.getOrganizationChiefName());
 		this.setOrganizationCreateDate(organizationDto.getOrganizationCreateDate());
 		this.setOrganizationCreationDate(organizationDto.getOrganizationCreationDate());
-		this.setOrganizationDeleteDate(organizationDto.getOrganizationDeleteDate());
 		this.setOrganizationDescription(organizationDto.getOrganizationDescription());
 		this.setOrganizationEmail(organizationDto.getOrganizationEmail());
+		this.setOrganizationMatricule(organizationDto.getOrganizationMatricule());
+		this.setOrganizationChiefFirstname(organizationDto.getOrganizationChiefFirstname());
 	}
 
 	public int getOrganizationId() {
@@ -97,6 +115,14 @@ public class Organization {
 
 	public void setOrganizationId(int organizationId) {
 		this.organizationId = organizationId;
+	}
+
+	public String getOrganizationMatricule() {
+		return organizationMatricule;
+	}
+
+	public void setOrganizationMatricule(String organizationMatricule) {
+		this.organizationMatricule = organizationMatricule;
 	}
 
 	public String getOrganizationName() {
@@ -113,6 +139,14 @@ public class Organization {
 
 	public void setOrganizationChiefName(String organizationChiefName) {
 		this.organizationChiefName = organizationChiefName;
+	}
+
+	public String getOrganizationChiefFirstname() {
+		return organizationChiefFirstname;
+	}
+
+	public void setOrganizationChiefFirstname(String organizationChiefFirstname) {
+		this.organizationChiefFirstname = organizationChiefFirstname;
 	}
 
 	public String getOrganizationPassword() {
@@ -179,27 +213,27 @@ public class Organization {
 		this.organizationCreationDate = organizationCreationDate;
 	}
 
-	public String getOrganizationCreateDate() {
+	public Date getOrganizationCreateDate() {
 		return organizationCreateDate;
 	}
 
-	public void setOrganizationCreateDate(String organizationCreateDate) {
+	public void setOrganizationCreateDate(Date organizationCreateDate) {
 		this.organizationCreateDate = organizationCreateDate;
 	}
 
-	public String getOrganizationUpdateDate() {
+	public Date getOrganizationUpdateDate() {
 		return organizationUpdateDate;
 	}
 
-	public void setOrganizationUpdateDate(String organizationUpdateDate) {
+	public void setOrganizationUpdateDate(Date organizationUpdateDate) {
 		this.organizationUpdateDate = organizationUpdateDate;
 	}
 
-	public String getOrganizationDeleteDate() {
+	public Date getOrganizationDeleteDate() {
 		return organizationDeleteDate;
 	}
 
-	public void setOrganizationDeleteDate(String organizationDeleteDate) {
+	public void setOrganizationDeleteDate(Date organizationDeleteDate) {
 		this.organizationDeleteDate = organizationDeleteDate;
 	}
 
@@ -210,6 +244,5 @@ public class Organization {
 	public void setOrganizationIsDeleted(boolean organizationIsDeleted) {
 		this.organizationIsDeleted = organizationIsDeleted;
 	}
-	
 	
 }

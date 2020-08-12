@@ -1,8 +1,11 @@
 package com.etna.gpe.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
+import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.dto.EventDto;
@@ -11,65 +14,162 @@ import com.etna.gpe.dto.EventDto;
 @Table(name = "event")
 public class Event {
 
-	
 	@Id
 	@Column(name = "event_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int eventId;
-	
-	@NotBlank
-	@Column(name ="event_title")
-	String eventTitle;
-	
-	@NotBlank
-	@Column(name ="event_description")
-	String eventDescription;
-	
-	@Column(name ="event_create_date")
-	String eventCreateDate;
-	
-	@Column(name ="event_update_date")
-	String eventUpdateDate;
-	
-	@Column(name ="event_delete_date")
-	String eventDeleteDate;
-	
-	@NotBlank
-	@Column(name ="event_place")
-	String eventPlace;
-	
-	@NotBlank
-	@Column(name ="event_date")
-	String eventDate;
-	
-	@Column(name ="event_is_deleted")
-	boolean eventIsDeleted;
-	
-	@ManyToOne
-	@JoinColumn
-	EventMaker eventMaker;
-	
-	@ManyToOne
-	@JoinColumn
-	Community community;
-	
-	@ManyToOne
-	@JoinColumn
-	Category category;
-	
+	private int eventId;
+
+	@Column(name = "event_title", nullable = false)
+	private String eventTitle;
+
+	@Column(name = "event_description", length = 10000, nullable = false)
+	private String eventDescription;
+
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "event_create_date")
+	private Date eventCreateDate;
+
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "event_update_date")
+	private Date eventUpdateDate;
+
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "event_delete_date")
+	private Date eventDeleteDate;
+
+	@Column(name = "event_place", nullable = false)
+	private String eventPlace;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "event_date")
+	private Date eventDate;
+
+	@Column(name = "event_is_deleted")
+	private boolean eventIsDeleted;
+
+	@Column(name = "event_maker_email", nullable = false)
+	private String eventMakerEmail;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST })
+	private Community community;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST })
+	private Category category;
+
 	public Event(@NonNull EventDto eventDto) {
 		this.setCategory(eventDto.getCategory());
 		this.setCommunity(eventDto.getCommunity());
-		this.setEventCreateDate(eventDto.getEventCreateDate());
+		if (eventDto.getEventCreateDate() != null)
+			this.setEventCreateDate(eventDto.getEventCreateDate());
 		this.setEventDate(eventDto.getEventDate());
-		this.setEventDeleteDate(eventDto.getEventDeleteDate());
 		this.setEventDescription(eventDto.getEventDescription());
-		this.setEventId(eventDto.getEventId());
 		this.setEventIsDeleted(eventDto.isEventIsDeleted());
-		this.setEventMaker(eventDto.getEventMaker());
+		this.setEventMakerEmail(eventDto.getEventMakerEmail());
 		this.setEventPlace(eventDto.getEventPlace());
 		this.setEventTitle(eventDto.getEventTitle());
-		this.setEventUpdateDate(eventDto.getEventUpdateDate());
+		if (eventDto.getEventUpdateDate() != null)
+			this.setEventUpdateDate(eventDto.getEventUpdateDate());
+	}
+
+	protected Event() {
+		// empty constructor
+	}
+
+	@Override
+	public String toString() {
+		return "Event [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventDescription=" + eventDescription
+				+ ", eventCreateDate=" + eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate="
+				+ eventDeleteDate + ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted="
+				+ eventIsDeleted + ", community=" + community + ", category=" + category + ", eventMakerEmail="
+				+ eventMakerEmail + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((community == null) ? 0 : community.hashCode());
+		result = prime * result + ((eventCreateDate == null) ? 0 : eventCreateDate.hashCode());
+		result = prime * result + ((eventDate == null) ? 0 : eventDate.hashCode());
+		result = prime * result + ((eventDeleteDate == null) ? 0 : eventDeleteDate.hashCode());
+		result = prime * result + ((eventDescription == null) ? 0 : eventDescription.hashCode());
+		result = prime * result + eventId;
+		result = prime * result + (eventIsDeleted ? 1231 : 1237);
+		result = prime * result + ((eventMakerEmail == null) ? 0 : eventMakerEmail.hashCode());
+		result = prime * result + ((eventPlace == null) ? 0 : eventPlace.hashCode());
+		result = prime * result + ((eventTitle == null) ? 0 : eventTitle.hashCode());
+		result = prime * result + ((eventUpdateDate == null) ? 0 : eventUpdateDate.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Event other = (Event) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (community == null) {
+			if (other.community != null)
+				return false;
+		} else if (!community.equals(other.community))
+			return false;
+		if (eventCreateDate == null) {
+			if (other.eventCreateDate != null)
+				return false;
+		} else if (!eventCreateDate.equals(other.eventCreateDate))
+			return false;
+		if (eventDate == null) {
+			if (other.eventDate != null)
+				return false;
+		} else if (!eventDate.equals(other.eventDate))
+			return false;
+		if (eventDeleteDate == null) {
+			if (other.eventDeleteDate != null)
+				return false;
+		} else if (!eventDeleteDate.equals(other.eventDeleteDate))
+			return false;
+		if (eventDescription == null) {
+			if (other.eventDescription != null)
+				return false;
+		} else if (!eventDescription.equals(other.eventDescription))
+			return false;
+		if (eventId != other.eventId)
+			return false;
+		if (eventIsDeleted != other.eventIsDeleted)
+			return false;
+		if (eventMakerEmail == null) {
+			if (other.eventMakerEmail != null)
+				return false;
+		} else if (!eventMakerEmail.equals(other.eventMakerEmail))
+			return false;
+		if (eventPlace == null) {
+			if (other.eventPlace != null)
+				return false;
+		} else if (!eventPlace.equals(other.eventPlace))
+			return false;
+		if (eventTitle == null) {
+			if (other.eventTitle != null)
+				return false;
+		} else if (!eventTitle.equals(other.eventTitle))
+			return false;
+		if (eventUpdateDate == null) {
+			if (other.eventUpdateDate != null)
+				return false;
+		} else if (!eventUpdateDate.equals(other.eventUpdateDate))
+			return false;
+		return true;
 	}
 
 	public int getEventId() {
@@ -96,27 +196,27 @@ public class Event {
 		this.eventDescription = eventDescription;
 	}
 
-	public String getEventCreateDate() {
+	public Date getEventCreateDate() {
 		return eventCreateDate;
 	}
 
-	public void setEventCreateDate(String eventCreateDate) {
+	public void setEventCreateDate(Date eventCreateDate) {
 		this.eventCreateDate = eventCreateDate;
 	}
 
-	public String getEventUpdateDate() {
+	public Date getEventUpdateDate() {
 		return eventUpdateDate;
 	}
 
-	public void setEventUpdateDate(String eventUpdateDate) {
+	public void setEventUpdateDate(Date eventUpdateDate) {
 		this.eventUpdateDate = eventUpdateDate;
 	}
 
-	public String getEventDeleteDate() {
+	public Date getEventDeleteDate() {
 		return eventDeleteDate;
 	}
 
-	public void setEventDeleteDate(String eventDeleteDate) {
+	public void setEventDeleteDate(Date eventDeleteDate) {
 		this.eventDeleteDate = eventDeleteDate;
 	}
 
@@ -128,11 +228,11 @@ public class Event {
 		this.eventPlace = eventPlace;
 	}
 
-	public String getEventDate() {
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(String eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 
@@ -142,14 +242,6 @@ public class Event {
 
 	public void setEventIsDeleted(boolean eventIsDeleted) {
 		this.eventIsDeleted = eventIsDeleted;
-	}
-
-	public EventMaker getEventMaker() {
-		return eventMaker;
-	}
-
-	public void setEventMaker(EventMaker eventMaker) {
-		this.eventMaker = eventMaker;
 	}
 
 	public Community getCommunity() {
@@ -167,5 +259,13 @@ public class Event {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
+	public String getEventMakerEmail() {
+		return eventMakerEmail;
+	}
+
+	public void setEventMakerEmail(String eventMakerEmail) {
+		this.eventMakerEmail = eventMakerEmail;
+	}
+
 }

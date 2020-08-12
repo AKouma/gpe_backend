@@ -1,56 +1,45 @@
 package com.etna.gpe.dto;
 
+import java.util.Date;
+
+
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
-import com.etna.gpe.model.EventMaker;
 
 public class EventDto {
 	
 	int eventId;
 	String eventTitle;
 	String eventDescription;
-	String eventCreateDate;
-	String eventUpdateDate;
-	String eventDeleteDate;
+	Date eventCreateDate;
+	Date eventUpdateDate;
 	String eventPlace;
-	String eventDate;
+	Date eventDate;
 	boolean eventIsDeleted;
-	EventMaker eventMaker;
 	Community community;
 	Category category;
+	String eventMakerEmail;
 	
 	
 
-	protected EventDto() {
+	public EventDto() {
 	}
 	
 	public EventDto(@NonNull Event event) {
-		this.setCategory(event.getCategory());
-		this.setCommunity(event.getCommunity());
+		//this.setCategory(event.getCategory());
+	//	this.setCommunity(event.getCommunity());
 		this.setEventCreateDate(event.getEventCreateDate());
 		this.setEventDate(event.getEventDate());
-		this.setEventDeleteDate(event.getEventDeleteDate());
 		this.setEventDescription(event.getEventDescription());
 		this.setEventId(event.getEventId());
 		this.setEventIsDeleted(event.isEventIsDeleted());
-		this.setEventMaker(event.getEventMaker());
+		this.setEventMakerEmail(event.getEventMakerEmail());
 		this.setEventPlace(event.getEventPlace());
 		this.setEventTitle(event.getEventTitle());
 		this.setEventUpdateDate(event.getEventUpdateDate());
-	}
-	
-	
-
-	@Override
-	public String toString() {
-		return "EventDto [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventDescription=" + eventDescription
-				+ ", eventCreateDate=" + eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate="
-				+ eventDeleteDate + ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted="
-				+ eventIsDeleted + ", eventMaker=" + eventMaker + ", community=" + community + ", category=" + category
-				+ "]";
 	}
 
 	public int getEventId() {
@@ -77,28 +66,20 @@ public class EventDto {
 		this.eventDescription = eventDescription;
 	}
 
-	public String getEventCreateDate() {
+	public Date getEventCreateDate() {
 		return eventCreateDate;
 	}
 
-	public void setEventCreateDate(String eventCreateDate) {
+	public void setEventCreateDate(Date eventCreateDate) {
 		this.eventCreateDate = eventCreateDate;
 	}
 
-	public String getEventUpdateDate() {
+	public Date getEventUpdateDate() {
 		return eventUpdateDate;
 	}
 
-	public void setEventUpdateDate(String eventUpdateDate) {
+	public void setEventUpdateDate(Date eventUpdateDate) {
 		this.eventUpdateDate = eventUpdateDate;
-	}
-
-	public String getEventDeleteDate() {
-		return eventDeleteDate;
-	}
-
-	public void setEventDeleteDate(String eventDeleteDate) {
-		this.eventDeleteDate = eventDeleteDate;
 	}
 
 	public String getEventPlace() {
@@ -109,11 +90,11 @@ public class EventDto {
 		this.eventPlace = eventPlace;
 	}
 
-	public String getEventDate() {
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(String eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 
@@ -123,14 +104,6 @@ public class EventDto {
 
 	public void setEventIsDeleted(boolean eventIsDeleted) {
 		this.eventIsDeleted = eventIsDeleted;
-	}
-
-	public EventMaker getEventMaker() {
-		return eventMaker;
-	}
-
-	public void setEventMaker(EventMaker eventMaker) {
-		this.eventMaker = eventMaker;
 	}
 
 	public Community getCommunity() {
@@ -149,4 +122,11 @@ public class EventDto {
 		this.category = category;
 	}
 
+	public String getEventMakerEmail() {
+		return eventMakerEmail;
+	}
+
+	public void setEventMakerEmail(String eventMakerEmail) {
+		this.eventMakerEmail = eventMakerEmail;
+	}
 }

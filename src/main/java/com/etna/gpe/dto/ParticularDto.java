@@ -1,20 +1,23 @@
 package com.etna.gpe.dto;
 
+import java.util.Date;
+
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.model.Particular;
 
 public class ParticularDto {
 	int particularId;
-	 String particularName;
-	 String particularFirstName;
-	 String particularPassword;
-	 String particularPhonenumber;
-	 String particularEmail;
-	 String particularCreateDate;
-	 String particularUpdateDate;
-	 String particularDeleteDate;
-	 boolean particularIsDeleted;
+	 private String particularName;
+	 private String particularFirstName;
+	 private String particularPassword;
+	 private String particularPhonenumber;
+	 private String particularEmail;
+	 private Date particularCreateDate;
+	 private Date particularUpdateDate;
+	 private boolean particularIsDeleted;
+	 private String particularLocation;
+	 private String category;
 	 
 	 public ParticularDto() {
 		// TODO Auto-generated constructor stub
@@ -23,7 +26,6 @@ public class ParticularDto {
 	 public ParticularDto(@NonNull Particular particular) {
 		 this.setParticularId(particular.getParticularId());
 		 this.setParticularCreateDate(particular.getParticularCreateDate());
-		 this.setParticularDeleteDate(particular.getParticularDeleteDate());
 		 this.setParticularEmail(particular.getParticularEmail());
 		 this.setParticularFirstName(particular.getParticularFirstName());
 		 this.setParticularIsDeleted(particular.isParticularIsDeleted());
@@ -31,18 +33,10 @@ public class ParticularDto {
 		 this.setParticularPassword(particular.getParticularPassword());
 		 this.setParticularPhonenumber(particular.getParticularPhonenumber());
 		 this.setParticularUpdateDate(particular.getParticularUpdateDate());
+		 this.setParticularLocation(particular.getParticularLocation());
+		 this.setCategory(particular.getCategory());
 		}
 
-	@Override
-	public String toString() {
-		return "ParticularDto [particularId=" + particularId + ", particularName=" + particularName
-				+ ", particularFirstName=" + particularFirstName + ", particularPassword=" + particularPassword
-				+ ", particularPhonenumber=" + particularPhonenumber + ", particularEmail=" + particularEmail
-				+ ", particularCreateDate=" + particularCreateDate + ", particularUpdateDate=" + particularUpdateDate
-				+ ", particularDeleteDate=" + particularDeleteDate + ", particularIsDeleted=" + particularIsDeleted
-				+ "]";
-	}
-	
 	public int getParticularId() {
 		return particularId;
 	}
@@ -91,28 +85,20 @@ public class ParticularDto {
 		this.particularEmail = particularEmail;
 	}
 
-	public String getParticularCreateDate() {
+	public Date getParticularCreateDate() {
 		return particularCreateDate;
 	}
 
-	public void setParticularCreateDate(String particularCreateDate) {
+	public void setParticularCreateDate(Date particularCreateDate) {
 		this.particularCreateDate = particularCreateDate;
 	}
 
-	public String getParticularUpdateDate() {
+	public Date getParticularUpdateDate() {
 		return particularUpdateDate;
 	}
 
-	public void setParticularUpdateDate(String particularUpdateDate) {
+	public void setParticularUpdateDate(Date particularUpdateDate) {
 		this.particularUpdateDate = particularUpdateDate;
-	}
-
-	public String getParticularDeleteDate() {
-		return particularDeleteDate;
-	}
-
-	public void setParticularDeleteDate(String particularDeleteDate) {
-		this.particularDeleteDate = particularDeleteDate;
 	}
 
 	public boolean isParticularIsDeleted() {
@@ -122,4 +108,21 @@ public class ParticularDto {
 	public void setParticularIsDeleted(boolean particularIsDeleted) {
 		this.particularIsDeleted = particularIsDeleted;
 	}
+
+	public String getParticularLocation() {
+		return particularLocation;
+	}
+
+	public void setParticularLocation(String particularLocation) {
+		this.particularLocation = particularLocation;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	 
 }

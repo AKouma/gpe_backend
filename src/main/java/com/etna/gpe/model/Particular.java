@@ -1,148 +1,200 @@
 package com.etna.gpe.model;
 
 import com.etna.gpe.dto.ParticularDto;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
+
+import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "particular")
-public class Particular {
+public class Particular extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "particular_id")
-    int particularId;
+	public static enum PARTICULAR_CATEGORY {
+		SIMPLE_USER(1, "utilisateur_simple"), BENEVOL(2, "bénévol");
 
-    @Column(name = "particular_name")
-    String particularName;
+		private int categoryValue;
+		private String categoryName;
 
-    @Column(name = "particular_first_name")
-    String particularFirstName;
+		PARTICULAR_CATEGORY(int categoryValue, String categoryName) {
+			this.categoryValue = categoryValue;
+			this.categoryName = categoryName;
+		}
 
-    @NotBlank
-    @Column(name = "particular_password", nullable = false)
-    String particularPassword;
+		public int getCategoryValue() {
+			return categoryValue;
+		}
 
-    @Column(name = "particular_phone_number")
-    String particularPhonenumber;
+		public String getCategoryName() {
+			return categoryName;
+		}
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "particular_id")
+	private int particularId;
+
+	@Column(name = "particular_category")
+	private String category = PARTICULAR_CATEGORY.SIMPLE_USER.categoryName;
+
+	@Column(name = "particular_name")
+	private String particularName;
+
+	@Column(name = "particular_first_name")
+	private String particularFirstName;
 
 	@NotBlank
-    @Column(name = "particular_email", nullable = false)
-    String particularEmail;
+	@Column(name = "particular_password", nullable = false)
+	private String particularPassword;
 
-    @Column(name = "particular_create_date")
-    String particularCreateDate;
+	@Column(name = "particular_phone_number")
+	private String particularPhonenumber;
 
-    @Column(name = "particular_update_date")
-    String particularUpdateDate;
+	@Column(name = "particular_location")
+	private String particularLocation;
 
-    @Column(name = "particular_delete_date")
-    String particularDeleteDate;
+	@NotBlank
+	@Column(name = "particular_email", nullable = false)
+	private String particularEmail;
 
-    @Column(name = "particular_is_deleted")
-    boolean particularIsDeleted = false;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "particular_create_date")
+	private Date particularCreateDate;
 
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "particular_update_date")
+	private Date particularUpdateDate;
 
-    protected Particular() {
-        //empty constructor
-    }
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "particular_delete_date")
+	private Date particularDeleteDate;
 
-    public Particular(@NonNull ParticularDto particularDto, boolean isNew) {
-        if (!isNew)
-            this.setParticularId(particularDto.getParticularId());
-        this.setParticularCreateDate(particularDto.getParticularCreateDate());
-        this.setParticularDeleteDate(particularDto.getParticularDeleteDate());
-        this.setParticularEmail(particularDto.getParticularEmail());
-        this.setParticularFirstName(particularDto.getParticularFirstName());
-        this.setParticularIsDeleted(particularDto.isParticularIsDeleted());
-        this.setParticularName(particularDto.getParticularName());
-        this.setParticularPassword(particularDto.getParticularPassword());
-        this.setParticularPhonenumber(particularDto.getParticularPhonenumber());
-        this.setParticularUpdateDate(particularDto.getParticularUpdateDate());
-    }
+	@Column(name = "particular_is_deleted")
+	boolean particularIsDeleted = false;
 
+	protected Particular() {
+		// empty constructor
+	}
 
-    public int getParticularId() {
-        return particularId;
-    }
+	public Particular(@NonNull ParticularDto particularDto, boolean isNew) {
+		if (!isNew)
+			this.setParticularId(particularDto.getParticularId());
+		this.setParticularCreateDate(particularDto.getParticularCreateDate());
+		this.setParticularEmail(particularDto.getParticularEmail());
+		this.setParticularFirstName(particularDto.getParticularFirstName());
+		this.setParticularIsDeleted(particularDto.isParticularIsDeleted());
+		this.setParticularName(particularDto.getParticularName());
+		this.setParticularPassword(particularDto.getParticularPassword());
+		this.setParticularPhonenumber(particularDto.getParticularPhonenumber());
+		this.setParticularUpdateDate(particularDto.getParticularUpdateDate());
+		this.setParticularLocation(particularDto.getParticularLocation());
+		if (particularDto.getCategory() != null)
+			this.setCategory(particularDto.getCategory());
+	}
 
-    public void setParticularId(int particularId) {
-        this.particularId = particularId;
-    }
+	public int getParticularId() {
+		return particularId;
+	}
 
-    public String getParticularName() {
-        return particularName;
-    }
+	public void setParticularId(int particularId) {
+		this.particularId = particularId;
+	}
 
-    public void setParticularName(String particularName) {
-        this.particularName = particularName;
-    }
+	public String getParticularName() {
+		return particularName;
+	}
 
-    public String getParticularFirstName() {
-        return particularFirstName;
-    }
+	public void setParticularName(String particularName) {
+		this.particularName = particularName;
+	}
 
-    public void setParticularFirstName(String particularFirstName) {
-        this.particularFirstName = particularFirstName;
-    }
+	public String getParticularFirstName() {
+		return particularFirstName;
+	}
 
-    public String getParticularPassword() {
-        return particularPassword;
-    }
+	public void setParticularFirstName(String particularFirstName) {
+		this.particularFirstName = particularFirstName;
+	}
 
-    public void setParticularPassword(String particularPassword) {
-        this.particularPassword = particularPassword;
-    }
+	public String getParticularPassword() {
+		return particularPassword;
+	}
 
-    public String getParticularPhonenumber() {
-        return particularPhonenumber;
-    }
+	public void setParticularPassword(String particularPassword) {
+		this.particularPassword = particularPassword;
+	}
 
-    public void setParticularPhonenumber(String particularPhonenumber) {
-        this.particularPhonenumber = particularPhonenumber;
-    }
+	public String getParticularPhonenumber() {
+		return particularPhonenumber;
+	}
 
-    public String getParticularEmail() {
-        return particularEmail;
-    }
+	public void setParticularPhonenumber(String particularPhonenumber) {
+		this.particularPhonenumber = particularPhonenumber;
+	}
 
-    public void setParticularEmail(String particularEmail) {
-        this.particularEmail = particularEmail;
-    }
+	public String getParticularLocation() {
+		return particularLocation;
+	}
 
-    public String getParticularCreateDate() {
-        return particularCreateDate;
-    }
+	public void setParticularLocation(String particularLocation) {
+		this.particularLocation = particularLocation;
+	}
 
-    public void setParticularCreateDate(String particularCreateDate) {
-        this.particularCreateDate = particularCreateDate;
-    }
+	public String getParticularEmail() {
+		return particularEmail;
+	}
 
-    public String getParticularUpdateDate() {
-        return particularUpdateDate;
-    }
+	public void setParticularEmail(String particularEmail) {
+		this.particularEmail = particularEmail;
+	}
 
-    public void setParticularUpdateDate(String particularUpdateDate) {
-        this.particularUpdateDate = particularUpdateDate;
-    }
+	public Date getParticularCreateDate() {
+		return particularCreateDate;
+	}
 
-    public String getParticularDeleteDate() {
-        return particularDeleteDate;
-    }
+	public void setParticularCreateDate(Date particularCreateDate) {
+		this.particularCreateDate = particularCreateDate;
+	}
 
-    public void setParticularDeleteDate(String particularDeleteDate) {
-        this.particularDeleteDate = particularDeleteDate;
-    }
+	public Date getParticularUpdateDate() {
+		return particularUpdateDate;
+	}
 
-    public boolean isParticularIsDeleted() {
-        return particularIsDeleted;
-    }
+	public void setParticularUpdateDate(Date particularUpdateDate) {
+		this.particularUpdateDate = particularUpdateDate;
+	}
 
-    public void setParticularIsDeleted(boolean particularIsDeleted) {
-        this.particularIsDeleted = particularIsDeleted;
-    }
+	public Date getParticularDeleteDate() {
+		return particularDeleteDate;
+	}
 
+	public void setParticularDeleteDate(Date particularDeleteDate) {
+		this.particularDeleteDate = particularDeleteDate;
+	}
+
+	public boolean isParticularIsDeleted() {
+		return particularIsDeleted;
+	}
+
+	public void setParticularIsDeleted(boolean particularIsDeleted) {
+		this.particularIsDeleted = particularIsDeleted;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 }
