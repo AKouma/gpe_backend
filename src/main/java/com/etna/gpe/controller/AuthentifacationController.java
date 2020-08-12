@@ -5,6 +5,9 @@ import com.etna.gpe.dto.AuthenDto;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.service.OrganizationService;
 import com.etna.gpe.service.ParticularService;
+
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authen")
 public class AuthentifacationController {
-
+	
+	public static HashMap<String, String> users = new HashMap<String, String>();
+	
     @Autowired
     ParticularService particularService;
     

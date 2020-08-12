@@ -35,7 +35,7 @@ public class OrganizationController {
     OrganizationDto getOrganizationByEmail(@RequestParam(value = "email") String email) {
     	if(email.isEmpty() || email == null)
     		throw new ParametersNotFound();
-        return organizationService.getOrganizationByEmail(email);
+        return organizationService.getOrganizationByEmail(email, false);
     }
 
     //todo post a requestbody and not delete really but put boolean to true

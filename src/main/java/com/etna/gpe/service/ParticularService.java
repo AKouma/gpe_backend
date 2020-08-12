@@ -1,23 +1,38 @@
 package com.etna.gpe.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.etna.gpe.config.JwtTokenUtil;
+import com.etna.gpe.controller.AuthentifacationController;
 import com.etna.gpe.controller.customexception.ResourceNotExist;
 import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.dto.ParticularDto;
 import com.etna.gpe.model.Particular;
 import com.etna.gpe.repository.ParticularRepository;
+import com.etna.gpe.utils.StringUtils;
 
 @Service
 public class ParticularService {
+
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	ParticularRepository particularRepository;
@@ -55,11 +70,19 @@ public class ParticularService {
 
 	public AuthenResponseDto getParticularByEmailAndPassword(@NonNull String email, @NonNull String password) {
 		AuthenResponseDto authenResponseDto = new AuthenResponseDto();
-		Particular particular = particularRepository.findParticularByparticularEmailAndParticularPassword(email,
-				password);
+		Particular particular = particularRepository.findParticularByParticularEmail(email);
 		// resource not exist
-		if (particular == null)
+		if (particular == null || !StringUtils.verifyHash(password, particular.getParticularPassword()))
 			throw new ResourceNotExist();
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password,
+				Collections.emptyList());
+		// authenticate the user
+		Authentication authentication = authenticationManager.authenticate(authRequest);
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		securityContext.setAuthentication(authentication);
+		authenResponseDto.setToken(jwtTokenUtil.generateToken(email));
+		// save user unhash credentials
+		AuthentifacationController.users.put(email, password);
 		// convert to dto
 		authenResponseDto.setParticularDto(new ParticularDto(particular));
 		// here we set all events that organization made
@@ -82,15 +105,17 @@ public class ParticularService {
 				isNew = true;
 			}
 		}
-		 setDto(particularDto, dto);
-		 
-		 Particular particular = particularRepository.save(new Particular(dto, isNew));
-		 
-		 if(particular == null)
-			 throw new ServerError();
-		 
-		 dto = new ParticularDto(particular);
-		 return dto;
+		setDto(particularDto, dto);
+
+		dto.setParticularPassword(StringUtils.hashBcrypt(dto.getParticularPassword()));
+
+		Particular particular = particularRepository.save(new Particular(dto, isNew));
+
+		if (particular == null)
+			throw new ServerError();
+
+		dto = new ParticularDto(particular);
+		return dto;
 	}
 
 	public void deleteParticular(@NonNull String email) {
@@ -106,8 +131,9 @@ public class ParticularService {
 	private void setDto(@NonNull ParticularDto particularDto, ParticularDto dto) {
 		dto.setParticularEmail(particularDto.getParticularEmail());
 		dto.setParticularPassword(particularDto.getParticularPassword());
-		dto.setParticularPhonenumber(particularDto.getParticularPhonenumber() != null ?
-				particularDto.getParticularPhonenumber() : dto.getParticularPhonenumber());
+		dto.setParticularPhonenumber(
+				particularDto.getParticularPhonenumber() != null ? particularDto.getParticularPhonenumber()
+						: dto.getParticularPhonenumber());
 		dto.setParticularLocation(particularDto.getParticularLocation() != null ? particularDto.getParticularLocation()
 				: dto.getParticularLocation());
 		dto.setParticularName(particularDto.getParticularName() != null ? particularDto.getParticularName()

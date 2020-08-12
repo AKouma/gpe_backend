@@ -13,7 +13,7 @@ import com.etna.gpe.dto.OrganizationDto;
 
 @Entity
 @Table(name ="organization")
-public class Organization {
+public class Organization extends User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

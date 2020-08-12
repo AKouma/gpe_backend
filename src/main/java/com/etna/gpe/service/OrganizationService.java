@@ -1,22 +1,38 @@
 package com.etna.gpe.service;
 
+import com.etna.gpe.config.JwtTokenUtil;
+import com.etna.gpe.controller.AuthentifacationController;
 import com.etna.gpe.controller.customexception.ResourceNotExist;
 import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AuthenResponseDto;
 import com.etna.gpe.dto.OrganizationDto;
 import com.etna.gpe.model.Organization;
 import com.etna.gpe.repository.OrganizationRepository;
+import com.etna.gpe.utils.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrganizationService {
+
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	OrganizationRepository organizationRepository;
@@ -39,22 +55,30 @@ public class OrganizationService {
 		return optional.map(OrganizationDto::new).orElseGet(OrganizationDto::new);
 	}
 
-	public OrganizationDto getOrganizationByEmail(@NonNull String email) {
+	public OrganizationDto getOrganizationByEmail(@NonNull String email, boolean isCreation) {
 		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(email);
-		if(organization == null)
+		if (organization == null && !isCreation)
 			throw new ResourceNotExist();
-		return new OrganizationDto(organization);
+		return organization != null ? new OrganizationDto(organization) : null;
 	}
 
 	public AuthenResponseDto getOrganizationByEmailAndPassword(@NonNull String email, @NonNull String password) {
 		AuthenResponseDto authenResponseDto = new AuthenResponseDto();
 		// request account
-		Organization organization = organizationRepository
-				.getOrganizationByOrganizationEmailAndOrganizationPassword(email, password);
+		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(email);
 		// account not exist
-		if (organization == null)
+		if (organization == null || !StringUtils.verifyHash(password, organization.getOrganizationPassword()))
 			throw new ResourceNotExist();
-		//convert to dto
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password,
+				Collections.emptyList());
+		// authenticate the user
+		Authentication authentication = authenticationManager.authenticate(authRequest);
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		securityContext.setAuthentication(authentication);
+		authenResponseDto.setToken(jwtTokenUtil.generateToken(email));
+		// save user unhash credentials
+		AuthentifacationController.users.put(email, password);
+		// convert to dto
 		authenResponseDto.setOrganizationDto(new OrganizationDto(organization));
 		// here we set all events that organization made
 		authenResponseDto.setEvents(eventService.getAllEventsUserMade(organization));
@@ -64,29 +88,32 @@ public class OrganizationService {
 	}
 
 	public OrganizationDto createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
-		OrganizationDto dto = getOrganizationByEmail(organizationDto.getOrganizationEmail());
+		OrganizationDto dto = getOrganizationByEmail(organizationDto.getOrganizationEmail(), true);
 		boolean isNew = false;
 		if (dto == null) {
 			dto = new OrganizationDto();
 			isNew = true;
 		}
 		setDto(organizationDto, dto);
+
+		dto.setOrganizationPassword(StringUtils.hashBcrypt(dto.getOrganizationPassword()));
+
 		Organization organization = organizationRepository.save(new Organization(dto, isNew));
-		
-		if(organization == null)
+
+		if (organization == null)
 			throw new ServerError();
-		
+
 		dto = new OrganizationDto(organization);
-		
+
 		return dto;
 	}
 
 	public void deleteOrganization(@NonNull String email) {
-		OrganizationDto dtoToDelete = getOrganizationByEmail(email);
+		OrganizationDto dtoToDelete = getOrganizationByEmail(email, false);
 		if (dtoToDelete != null) {
 			dtoToDelete.setOrganizationIsDeleted(true);
 			organizationRepository.save(new Organization(dtoToDelete, false));
-		}else {
+		} else {
 			throw new ResourceNotExist();
 		}
 	}

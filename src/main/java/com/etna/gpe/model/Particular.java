@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "particular")
-public class Particular {
+public class Particular extends User {
 
 	public static enum PARTICULAR_CATEGORY {
 		SIMPLE_USER(1, "utilisateur_simple"), BENEVOL(2, "bénévol");

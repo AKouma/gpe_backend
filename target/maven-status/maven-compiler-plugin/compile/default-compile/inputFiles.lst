@@ -1,6 +1,7 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/CommunityRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Category.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/OrganizationDto.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtTokenUtil.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/EventDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/CategoryRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Message.java
@@ -9,6 +10,7 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Organization.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/OrganizationRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Community.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/WebSecurityConfig.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/AuthenResponseDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/ParticularDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ResourceNotExist.java
@@ -21,11 +23,18 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/ParticularController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/EventController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/OrganizationService.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/JwtUserDetails.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/EventService.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/EventRepository.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtAuthenticationEntryPoint.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtRequestFilter.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/utils/StringUtils.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/OrganizationController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/ParticularService.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Event.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/utils/Userutils.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/GpeBackendApplication.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/AuthenticateException.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/User.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/customexception/ParametersNotFound.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtUserDetailsService.java

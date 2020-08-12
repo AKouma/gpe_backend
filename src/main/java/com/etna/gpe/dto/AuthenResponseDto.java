@@ -7,6 +7,7 @@ public class AuthenResponseDto {
 
 	private OrganizationDto organizationDto = null;
 	private ParticularDto particularDto = null;
+	private String token;
 	private List<EventDto> events = new ArrayList<EventDto>();
 	
 	public AuthenResponseDto() {}
@@ -37,6 +38,12 @@ public class AuthenResponseDto {
 		else
 			this.events.addAll(events);
 	}
-	
-	
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 }
