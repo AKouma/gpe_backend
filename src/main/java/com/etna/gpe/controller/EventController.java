@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.etna.gpe.controller.customexception.ParametersNotFound;
+import com.etna.gpe.dto.AddParticipantDto;
 import com.etna.gpe.dto.EventDto;
 import com.etna.gpe.service.EventService;
 
@@ -22,10 +24,10 @@ public class EventController {
 	@Autowired
 	EventService eventService;
 
-	@GetMapping("/all_events")
+	@GetMapping("/search_events")
 	@ResponseStatus(HttpStatus.OK)
-	List<EventDto> getAllEvents() {
-		return eventService.getAllEvents();
+	List<EventDto> searchEvents(@RequestParam String criteria) {
+		return eventService.searchEvents(criteria);
 	}
 
 	@PostMapping("/create_event")
@@ -34,7 +36,49 @@ public class EventController {
 		if (dto == null)
 			throw new ParametersNotFound();
 		
-		return eventService.createEvent(dto);
+		return eventService.createEventOrUpdate(dto);
+	}
+	
+	@GetMapping("/deleted_events")
+	@ResponseStatus(HttpStatus.OK)
+	void deletedEvent(@RequestParam int eventId) {
+		eventService.deletedEvent(eventId);
+	}
+	
+	@PostMapping("/add_participant_event")
+	@ResponseStatus(HttpStatus.OK)
+	EventDto addParticipantToEvent(@RequestBody AddParticipantDto dto) {
+		if (dto == null)
+			throw new ParametersNotFound();
+		
+		return eventService.addParticipantToEvent(dto);
+	}
+	
+	@PostMapping("/remove_participant_event")
+	@ResponseStatus(HttpStatus.OK)
+	EventDto removeParticipantToEvent(@RequestBody AddParticipantDto dto) {
+		if (dto == null)
+			throw new ParametersNotFound();
+		
+		return eventService.removeParticipantToEvent(dto);
+	}
+	
+	@PostMapping("/add_organization_to_event")
+	@ResponseStatus(HttpStatus.OK)
+	EventDto addOrganizationAsParticipantToEvent(@RequestBody AddParticipantDto dto) {
+		if (dto == null)
+			throw new ParametersNotFound();
+		
+		return eventService.addOrganizationAsParticipantToEvent(dto);
+	}
+	
+	@PostMapping("/remove_organization_to_event")
+	@ResponseStatus(HttpStatus.OK)
+	EventDto removeOrganizationAsParticipantToEvent(@RequestBody AddParticipantDto dto) {
+		if (dto == null)
+			throw new ParametersNotFound();
+		
+		return eventService.removeOrganizationAsParticipantToEvent(dto);
 	}
 
 }

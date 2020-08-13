@@ -45,7 +45,8 @@ public class OrganizationService {
 		List<OrganizationDto> organizationDto = new ArrayList<>();
 		while (it.hasNext()) {
 			OrganizationDto dto = new OrganizationDto(it.next());
-			organizationDto.add(dto);
+			if (!dto.isOrganizationIsDeleted())
+				organizationDto.add(dto);
 		}
 		return organizationDto;
 	}
@@ -59,7 +60,7 @@ public class OrganizationService {
 		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(email);
 		if (organization == null && !isCreation)
 			throw new ResourceNotExist();
-		return organization != null ? new OrganizationDto(organization) : null;
+		return organization != null && !organization.isOrganizationIsDeleted() ? new OrganizationDto(organization) : null;
 	}
 
 	public AuthenResponseDto getOrganizationByEmailAndPassword(@NonNull String email, @NonNull String password) {
@@ -67,7 +68,7 @@ public class OrganizationService {
 		// request account
 		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(email);
 		// account not exist
-		if (organization == null || !StringUtils.verifyHash(password, organization.getOrganizationPassword()))
+		if (organization == null || !StringUtils.verifyHash(password, organization.getOrganizationPassword()) || organization.isOrganizationIsDeleted())
 			throw new ResourceNotExist();
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password,
 				Collections.emptyList());
@@ -83,14 +84,15 @@ public class OrganizationService {
 		// here we set all events that organization made
 		authenResponseDto.setEvents(eventService.getAllEventsUserMade(organization));
 		// her we set all events that organization participate has benevols
-		// Todo
+		authenResponseDto.setEvents(eventService.getAllEventUserParticipate(organization));
+		
 		return authenResponseDto;
 	}
 
 	public OrganizationDto createOrUpdateuOrganization(@NonNull OrganizationDto organizationDto) {
 		OrganizationDto dto = getOrganizationByEmail(organizationDto.getOrganizationEmail(), true);
 		boolean isNew = false;
-		if (dto == null) {
+		if (dto == null || dto.isOrganizationIsDeleted()) {
 			dto = new OrganizationDto();
 			isNew = true;
 		}
@@ -110,7 +112,7 @@ public class OrganizationService {
 
 	public void deleteOrganization(@NonNull String email) {
 		OrganizationDto dtoToDelete = getOrganizationByEmail(email, false);
-		if (dtoToDelete != null) {
+		if (dtoToDelete != null && !dtoToDelete.isOrganizationIsDeleted()) {
 			dtoToDelete.setOrganizationIsDeleted(true);
 			organizationRepository.save(new Organization(dtoToDelete, false));
 		} else {

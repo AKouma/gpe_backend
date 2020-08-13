@@ -1,6 +1,7 @@
 package com.etna.gpe.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -50,14 +51,23 @@ public class Event {
 	@Column(name = "event_is_deleted")
 	private boolean eventIsDeleted;
 
+	@OneToMany
+	private List<Particular> participants;
+	
+	@OneToMany
+	private List<Organization> organizationsAsParticipants;
+
 	@Column(name = "event_maker_email", nullable = false)
 	private String eventMakerEmail;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST })
 	private Community community;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST })
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	private Category category;
+	
+	@Column(name = "picture")
+	private String picture;
 
 	public Event(@NonNull EventDto eventDto) {
 		this.setCategory(eventDto.getCategory());
@@ -70,6 +80,9 @@ public class Event {
 		this.setEventMakerEmail(eventDto.getEventMakerEmail());
 		this.setEventPlace(eventDto.getEventPlace());
 		this.setEventTitle(eventDto.getEventTitle());
+		this.setParticipants(eventDto.getParticipants());
+		this.setOrganizationsAsParticipants(eventDto.getOrganizationsAsParticipants());
+		this.setPicture(eventDto.getPicture());
 		if (eventDto.getEventUpdateDate() != null)
 			this.setEventUpdateDate(eventDto.getEventUpdateDate());
 	}
@@ -78,14 +91,18 @@ public class Event {
 		// empty constructor
 	}
 
+
 	@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventDescription=" + eventDescription
 				+ ", eventCreateDate=" + eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate="
 				+ eventDeleteDate + ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted="
-				+ eventIsDeleted + ", community=" + community + ", category=" + category + ", eventMakerEmail="
-				+ eventMakerEmail + "]";
+				+ eventIsDeleted + ", participants=" + participants + ", organizationsAsParticipants="
+				+ organizationsAsParticipants + ", eventMakerEmail=" + eventMakerEmail + ", community=" + community
+				+ ", category=" + category + ", picture=" + picture + "]";
 	}
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -103,6 +120,9 @@ public class Event {
 		result = prime * result + ((eventPlace == null) ? 0 : eventPlace.hashCode());
 		result = prime * result + ((eventTitle == null) ? 0 : eventTitle.hashCode());
 		result = prime * result + ((eventUpdateDate == null) ? 0 : eventUpdateDate.hashCode());
+		result = prime * result + ((organizationsAsParticipants == null) ? 0 : organizationsAsParticipants.hashCode());
+		result = prime * result + ((participants == null) ? 0 : participants.hashCode());
+		result = prime * result + ((picture == null) ? 0 : picture.hashCode());
 		return result;
 	}
 
@@ -168,6 +188,21 @@ public class Event {
 			if (other.eventUpdateDate != null)
 				return false;
 		} else if (!eventUpdateDate.equals(other.eventUpdateDate))
+			return false;
+		if (organizationsAsParticipants == null) {
+			if (other.organizationsAsParticipants != null)
+				return false;
+		} else if (!organizationsAsParticipants.equals(other.organizationsAsParticipants))
+			return false;
+		if (participants == null) {
+			if (other.participants != null)
+				return false;
+		} else if (!participants.equals(other.participants))
+			return false;
+		if (picture == null) {
+			if (other.picture != null)
+				return false;
+		} else if (!picture.equals(other.picture))
 			return false;
 		return true;
 	}
@@ -266,6 +301,38 @@ public class Event {
 
 	public void setEventMakerEmail(String eventMakerEmail) {
 		this.eventMakerEmail = eventMakerEmail;
+	}
+
+	public List<Particular> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Particular> participants) {
+		if (this.participants == null || this.participants.isEmpty())
+			this.participants = participants;
+		else
+			this.participants.addAll(participants);
+	}
+	
+	
+
+	public List<Organization> getOrganizationsAsParticipants() {
+		return organizationsAsParticipants;
+	}
+
+	public void setOrganizationsAsParticipants(List<Organization> organizationsAsParticipants) {
+		if (this.organizationsAsParticipants == null || this.organizationsAsParticipants.isEmpty())
+			this.organizationsAsParticipants = organizationsAsParticipants;
+		else
+			this.organizationsAsParticipants.addAll(organizationsAsParticipants);
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 }
