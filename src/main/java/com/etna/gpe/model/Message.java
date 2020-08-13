@@ -26,9 +26,6 @@ public class Message {
 	@Column(name = "message_update_date")
 	String messageUpdateDate;
 	
-	@Column(name = "message_delete_date")
-	String messageDeleteDate;
-	
 	@Column(name = "message_is_deleted")
 	boolean messageIsDeleted;
 	
@@ -88,14 +85,6 @@ public class Message {
 
 	public void setMessageUpdateDate(String messageUpdateDate) {
 		this.messageUpdateDate = messageUpdateDate;
-	}
-
-	public String getMessageDeleteDate() {
-		return messageDeleteDate;
-	}
-
-	public void setMessageDeleteDate(String messageDeleteDate) {
-		this.messageDeleteDate = messageDeleteDate;
 	}
 
 	public boolean isMessageIsDeleted() {

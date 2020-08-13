@@ -73,11 +73,6 @@ public class Particular extends User {
 	@Column(name = "particular_update_date")
 	private Date particularUpdateDate;
 
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "particular_delete_date")
-	private Date particularDeleteDate;
-
 	@Column(name = "particular_is_deleted")
 	boolean particularIsDeleted = false;
 
@@ -171,14 +166,6 @@ public class Particular extends User {
 
 	public void setParticularUpdateDate(Date particularUpdateDate) {
 		this.particularUpdateDate = particularUpdateDate;
-	}
-
-	public Date getParticularDeleteDate() {
-		return particularDeleteDate;
-	}
-
-	public void setParticularDeleteDate(Date particularDeleteDate) {
-		this.particularDeleteDate = particularDeleteDate;
 	}
 
 	public boolean isParticularIsDeleted() {

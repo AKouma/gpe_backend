@@ -3,7 +3,6 @@ package com.etna.gpe.model;
 import java.util.Date;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,41 +22,33 @@ public class Organization extends User {
 	@Column(name="organization_matricule", nullable = false)
 	private String organizationMatricule;
 	
-	@NotBlank
 	@Column(name="organization_name", nullable = false)
 	private String organizationName;
 	
-	@NotBlank
 	@Column(name="organization_chief_name", nullable = false)
 	private String organizationChiefName;
 	
-	@NotBlank
 	@Column(name="organization_chief_firstname", nullable = false)
 	private String organizationChiefFirstname;
 	
-	@NotBlank
 	@Column(name="organization_password", nullable = false)
 	private String organizationPassword;
 	
-	@NotBlank
 	@Column(name="organization_location", nullable = false)
 	private String organizationLocation;
 	
 	@Column(name="organization_logo")
 	private String organizationLogo;
 	
-	@NotBlank
 	@Column(name="organization_description", nullable = false)
 	private String organizationDescription;
 	
 	@Column(name="organization_web_site")
 	private String organizationWebSite;
 	
-	@NotBlank
 	@Column(name="organization_phone_number", nullable = false)
 	private String organizationPhoneNumber;
 	
-	@NotBlank
 	@Column(name="organization_email", nullable = false)
 	private String organizationEmail;
 	
@@ -73,11 +64,6 @@ public class Organization extends User {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="organization_update_date")
 	private Date organizationUpdateDate;
-	
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="organization_delete_date")
-	private Date organizationDeleteDate;
 	
 	@Column(name="organization_is_deleted")
 	private boolean organizationIsDeleted = false;
@@ -227,14 +213,6 @@ public class Organization extends User {
 
 	public void setOrganizationUpdateDate(Date organizationUpdateDate) {
 		this.organizationUpdateDate = organizationUpdateDate;
-	}
-
-	public Date getOrganizationDeleteDate() {
-		return organizationDeleteDate;
-	}
-
-	public void setOrganizationDeleteDate(Date organizationDeleteDate) {
-		this.organizationDeleteDate = organizationDeleteDate;
 	}
 
 	public boolean isOrganizationIsDeleted() {
