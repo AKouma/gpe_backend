@@ -27,10 +27,10 @@ public class EventService {
 
 	@Autowired
 	EventRepository eventRepository;
-	
+
 	@Autowired
 	ParticularRepository participantRepository;
-	
+
 	@Autowired
 	OrganizationRepository organizationRepository;
 
@@ -60,15 +60,16 @@ public class EventService {
 		}
 		return eventDto;
 	}
-	
-	public List<EventDto> getAllEventUserParticipate(Object user){
+
+	public List<EventDto> getAllEventUserParticipate(Object user) {
 		List<EventDto> eventDto = getEventDtoListFromEventIterator(eventRepository.findAll().iterator());
 		if (user instanceof Particular) {
-			eventDto.addAll(eventDto.stream().filter(e -> e.getParticipants()
-					.contains((Particular) user)).collect(Collectors.toList()));
+			eventDto.addAll(eventDto.stream().filter(e -> e.getParticipants().contains((Particular) user))
+					.collect(Collectors.toList()));
 		} else if (user instanceof Organization) {
-			eventDto.addAll(eventDto.stream().filter(e -> e.getOrganizationsAsParticipants()
-					.contains((Organization) user)).collect(Collectors.toList()));
+			eventDto.addAll(
+					eventDto.stream().filter(e -> e.getOrganizationsAsParticipants().contains((Organization) user))
+							.collect(Collectors.toList()));
 		}
 		return eventDto;
 	}
@@ -85,25 +86,22 @@ public class EventService {
 	}
 
 	public EventDto createEventOrUpdate(@NonNull EventDto dto) {
-		Event event = eventRepository.findById(dto.getEventId()).get();
-		if (event == null) {
-			event = new Event(dto);
-			Community community = new Community();
-			community.setCommunityAdmin(dto.getEventMakerEmail());
-			event.setCommunity(community);
-		}
-
+		Event event = null;
 		try {
+			event = eventRepository.findById(dto.getEventId()).get();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			if (event == null) {
+				event = new Event(dto);
+				Community community = new Community();
+				community.setCommunityAdmin(dto.getEventMakerEmail());
+				event.setCommunity(community);
+			}
 			event = eventRepository.save(event);
 			if (event == null)
 				throw new ServerError();
 
 			dto = new EventDto(event);
-
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			dto = null;
-			throw new ServerError();
 		}
 		return dto;
 	}
@@ -187,9 +185,9 @@ public class EventService {
 
 	public void deletedEvent(int eventId) {
 		Event eventToDelete = eventRepository.findById(eventId).get();
-		if(eventToDelete == null)
+		if (eventToDelete == null)
 			throw new ResourceNotExist();
-		
+
 		eventToDelete.setEventIsDeleted(true);
 		eventRepository.save(eventToDelete);
 	}
@@ -197,70 +195,72 @@ public class EventService {
 	public EventDto addParticipantToEvent(AddParticipantDto dto) {
 		Event event = eventRepository.findById(dto.getEventId()).get();
 		Particular particular = participantRepository.findParticularByParticularEmail(dto.getParticipantEmail());
-		if(event == null || event.isEventIsDeleted() || particular == null || particular.isParticularIsDeleted())
+		if (event == null || event.isEventIsDeleted() || particular == null || particular.isParticularIsDeleted())
 			throw new ResourceNotExist();
-		
+
 		List<Particular> participants = new ArrayList<Particular>();
 		participants.add(particular);
 		event.setParticipants(participants);
 		eventRepository.save(event);
-		
+
 		EventDto eventDto = new EventDto(event);
-		
+
 		return eventDto;
 	}
 
 	public EventDto removeParticipantToEvent(AddParticipantDto dto) {
 		Event event = eventRepository.findById(dto.getEventId()).get();
 		Particular particular = participantRepository.findParticularByParticularEmail(dto.getParticipantEmail());
-		if(event == null || event.isEventIsDeleted() || particular == null || particular.isParticularIsDeleted())
+		if (event == null || event.isEventIsDeleted() || particular == null || particular.isParticularIsDeleted())
 			throw new ResourceNotExist();
-		
+
 		List<Particular> participants = event.getParticipants();
 		participants.remove(particular);
-		//reset participant list
+		// reset participant list
 		event.setParticipants(null);
-		//add participants
+		// add participants
 		event.setParticipants(participants);
 		eventRepository.save(event);
-		
+
 		EventDto eventDto = new EventDto(event);
-		
+
 		return eventDto;
 	}
 
 	public EventDto addOrganizationAsParticipantToEvent(AddParticipantDto dto) {
 		Event event = eventRepository.findById(dto.getEventId()).get();
-		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(dto.getParticipantEmail());
-		if(event == null || event.isEventIsDeleted() || organization == null || organization.isOrganizationIsDeleted())
+		Organization organization = organizationRepository
+				.getOrganizationByOrganizationEmail(dto.getParticipantEmail());
+		if (event == null || event.isEventIsDeleted() || organization == null || organization.isOrganizationIsDeleted())
 			throw new ResourceNotExist();
-		
+
 		List<Organization> organizations = new ArrayList<Organization>();
 		organizations.add(organization);
 		event.setOrganizationsAsParticipants(organizations);
 		eventRepository.save(event);
-		
+
 		EventDto eventDto = new EventDto(event);
-		
+
 		return eventDto;
 	}
 
 	public EventDto removeOrganizationAsParticipantToEvent(AddParticipantDto dto) {
 		Event event = eventRepository.findById(dto.getEventId()).get();
-		Organization organization = organizationRepository.getOrganizationByOrganizationEmail(dto.getParticipantEmail());
-		if(event == null || event.isEventIsDeleted() || organization == null || organization.isOrganizationIsDeleted())
+		Organization organization = organizationRepository
+				.getOrganizationByOrganizationEmail(dto.getParticipantEmail());
+		if (event == null || event.isEventIsDeleted() || organization == null || organization.isOrganizationIsDeleted())
 			throw new ResourceNotExist();
-		
+
 		List<Organization> organizations = event.getOrganizationsAsParticipants();
 		organizations.remove(organization);
-		//reset participant list
+		// reset participant list
 		event.setOrganizationsAsParticipants(null);
-		//add participants
+		// add participants
 		event.setOrganizationsAsParticipants(organizations);
 		eventRepository.save(event);
-		
+
 		EventDto eventDto = new EventDto(event);
-		
+
 		return eventDto;
 	}
 

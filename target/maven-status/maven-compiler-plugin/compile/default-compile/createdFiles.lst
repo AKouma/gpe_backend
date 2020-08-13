@@ -10,6 +10,7 @@ com/etna/gpe/config/JwtUserDetailsService.class
 com/etna/gpe/repository/ParticularRepository.class
 com/etna/gpe/controller/customexception/ParametersNotFound.class
 com/etna/gpe/service/EventService.class
+com/etna/gpe/dto/AddParticipantDto.class
 com/etna/gpe/dto/AuthenDto.class
 com/etna/gpe/utils/Userutils.class
 com/etna/gpe/dto/EventDto.class
@@ -23,6 +24,7 @@ com/etna/gpe/utils/StringUtils.class
 com/etna/gpe/repository/CategoryRepository.class
 com/etna/gpe/model/Event.class
 com/etna/gpe/model/User.class
+com/etna/gpe/utils/DateUtils.class
 com/etna/gpe/controller/customexception/ServerError.class
 com/etna/gpe/controller/OrganizationController.class
 com/etna/gpe/service/OrganizationService.class

@@ -1,6 +1,11 @@
 package com.etna.gpe.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "community")
@@ -14,14 +19,15 @@ public class Community {
 	@Column(name ="community_admin", nullable = false)
 	String communityAdmin;
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="community_create_date")
-	String communityCreateDate;
+	Date communityCreateDate;
 	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name ="community_update_date")
-	String communityUpdateDate;
-	
-	@Column(name ="community_delete_date")
-	String communityDeleteDate;
+	Date communityUpdateDate;
 	
 	@Column(name ="community_is_deleted")
 	boolean communityIsDeleted;
@@ -42,28 +48,20 @@ public class Community {
 		this.communityAdmin = communityAdmin;
 	}
 
-	public String getCommunityCreateDate() {
+	public Date getCommunityCreateDate() {
 		return communityCreateDate;
 	}
 
-	public void setCommunityCreateDate(String communityCreateDate) {
+	public void setCommunityCreateDate(Date communityCreateDate) {
 		this.communityCreateDate = communityCreateDate;
 	}
 
-	public String getCommunityUpdateDate() {
+	public Date getCommunityUpdateDate() {
 		return communityUpdateDate;
 	}
 
-	public void setCommunityUpdateDate(String communityUpdateDate) {
+	public void setCommunityUpdateDate(Date communityUpdateDate) {
 		this.communityUpdateDate = communityUpdateDate;
-	}
-
-	public String getCommunityDeleteDate() {
-		return communityDeleteDate;
-	}
-
-	public void setCommunityDeleteDate(String communityDeleteDate) {
-		this.communityDeleteDate = communityDeleteDate;
 	}
 
 	public boolean isCommunityIsDeleted() {
