@@ -1,36 +1,39 @@
 package com.etna.gpe.dto;
 
 import java.util.Date;
-
+import java.util.List;
 
 import org.springframework.lang.NonNull;
 
 import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
+import com.etna.gpe.model.Organization;
+import com.etna.gpe.model.Particular;
 
 public class EventDto {
-	
-	int eventId;
-	String eventTitle;
-	String eventDescription;
-	Date eventCreateDate;
-	Date eventUpdateDate;
-	String eventPlace;
-	Date eventDate;
-	boolean eventIsDeleted;
-	Community community;
-	Category category;
-	String eventMakerEmail;
-	
-	
+
+	private int eventId;
+	private String eventTitle;
+	private String eventDescription;
+	private Date eventCreateDate;
+	private Date eventUpdateDate;
+	private String eventPlace;
+	private Date eventDate;
+	private boolean eventIsDeleted;
+	private Community community;
+	private Category category;
+	private String eventMakerEmail;
+	private String picture;
+	private List<Particular> participants;
+	private List<Organization> organizationsAsParticipants;
 
 	public EventDto() {
 	}
-	
+
 	public EventDto(@NonNull Event event) {
-		//this.setCategory(event.getCategory());
-	//	this.setCommunity(event.getCommunity());
+		this.setCategory(event.getCategory());
+		this.setCommunity(event.getCommunity());
 		this.setEventCreateDate(event.getEventCreateDate());
 		this.setEventDate(event.getEventDate());
 		this.setEventDescription(event.getEventDescription());
@@ -40,6 +43,9 @@ public class EventDto {
 		this.setEventPlace(event.getEventPlace());
 		this.setEventTitle(event.getEventTitle());
 		this.setEventUpdateDate(event.getEventUpdateDate());
+		this.setParticipants(event.getParticipants());
+		this.setOrganizationsAsParticipants(event.getOrganizationsAsParticipants());
+		this.setPicture(event.getPicture());
 	}
 
 	public int getEventId() {
@@ -129,4 +135,35 @@ public class EventDto {
 	public void setEventMakerEmail(String eventMakerEmail) {
 		this.eventMakerEmail = eventMakerEmail;
 	}
+
+	public List<Particular> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Particular> participants) {
+		if (this.participants == null || this.participants.isEmpty())
+			this.participants = participants;
+		else
+			this.participants.addAll(participants);
+	}
+	
+	public List<Organization> getOrganizationsAsParticipants() {
+		return organizationsAsParticipants;
+	}
+
+	public void setOrganizationsAsParticipants(List<Organization> organizationsAsParticipants) {
+		if (this.organizationsAsParticipants == null || this.organizationsAsParticipants.isEmpty())
+			this.organizationsAsParticipants = organizationsAsParticipants;
+		else
+			this.organizationsAsParticipants.addAll(organizationsAsParticipants);
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	
 }

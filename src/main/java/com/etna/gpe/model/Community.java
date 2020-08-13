@@ -1,7 +1,6 @@
 package com.etna.gpe.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "community")
@@ -12,8 +11,7 @@ public class Community {
 	@Column(name = "community_id")
 	int communityId;
 	
-	@NotBlank
-	@Column(name ="community_admin")
+	@Column(name ="community_admin", nullable = false)
 	String communityAdmin;
 	
 	@Column(name ="community_create_date")

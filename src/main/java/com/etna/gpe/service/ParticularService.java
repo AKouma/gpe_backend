@@ -53,7 +53,7 @@ public class ParticularService {
 	public ParticularDto getparticularById(ParticularDto dto) {
 		Optional<Particular> optional = particularRepository.findById(dto.getParticularId());
 		// resource not exist
-		if (optional == null)
+		if (optional == null || optional.get().isParticularIsDeleted())
 			throw new ResourceNotExist();
 
 		return optional.map(ParticularDto::new).orElseGet(ParticularDto::new);
@@ -62,7 +62,7 @@ public class ParticularService {
 	public ParticularDto getParticularByEmail(@NonNull String email) {
 		Particular particular = particularRepository.findParticularByParticularEmail(email);
 		// resource not exist
-		if (particular == null)
+		if (particular == null || particular.isParticularIsDeleted())
 			throw new ResourceNotExist();
 
 		return new ParticularDto(particular);
@@ -72,7 +72,7 @@ public class ParticularService {
 		AuthenResponseDto authenResponseDto = new AuthenResponseDto();
 		Particular particular = particularRepository.findParticularByParticularEmail(email);
 		// resource not exist
-		if (particular == null || !StringUtils.verifyHash(password, particular.getParticularPassword()))
+		if (particular == null || !StringUtils.verifyHash(password, particular.getParticularPassword()) || particular.isParticularIsDeleted())
 			throw new ResourceNotExist();
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, password,
 				Collections.emptyList());
@@ -88,7 +88,8 @@ public class ParticularService {
 		// here we set all events that organization made
 		authenResponseDto.setEvents(eventService.getAllEventsUserMade(particular));
 		// her we set all events that organization participate has benevols
-		// Todo
+		authenResponseDto.setEvents(eventService.getAllEventUserParticipate(particular));
+		
 		return authenResponseDto;
 	}
 
@@ -100,7 +101,7 @@ public class ParticularService {
 			dto = getParticularByEmail(particularDto.getParticularEmail());
 		} catch (ResourceNotExist e) {
 			// new account
-			if (dto == null) {
+			if (dto == null || dto.isParticularIsDeleted()) {
 				dto = new ParticularDto();
 				isNew = true;
 			}
@@ -120,7 +121,7 @@ public class ParticularService {
 
 	public void deleteParticular(@NonNull String email) {
 		ParticularDto dtoToDelete = getParticularByEmail(email);
-		if (dtoToDelete != null) {
+		if (dtoToDelete != null && !dtoToDelete.isParticularIsDeleted()) {
 			dtoToDelete.setParticularIsDeleted(true);
 			particularRepository.save(new Particular(dtoToDelete, false));
 		} else {

@@ -33,7 +33,7 @@ public class AuthenResponseDto {
 	}
 
 	public void setEvents(List<EventDto> events) {
-		if(this.events.isEmpty())
+		if(this.events == null || this.events.isEmpty())
 			this.events = events;
 		else
 			this.events.addAll(events);

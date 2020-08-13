@@ -38,8 +38,7 @@ public class ParticularController {
 		return particularService.getParticularByEmail(email);
 	}
 
-	// todo post a requestbodyn and not delete really but put boolean to true
-	@PostMapping("/delete_particulier")
+	@GetMapping("/delete_particulier")
 	@ResponseStatus(HttpStatus.RESET_CONTENT)
 	void deleteparticular(@RequestParam(value = "email") String email) {
 		if (email == null || email.isEmpty())
