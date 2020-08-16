@@ -70,7 +70,7 @@ public class Event {
 	private String picture;
 
 	public Event(@NonNull EventDto eventDto) {
-		this.setCategory(eventDto.getCategory());
+		this.setCategory(new Category(eventDto.getCategory()));
 		this.setCommunity(eventDto.getCommunity());
 		if (eventDto.getEventCreateDate() != null)
 			this.setEventCreateDate(eventDto.getEventCreateDate());

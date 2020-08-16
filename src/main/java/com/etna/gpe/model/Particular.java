@@ -59,7 +59,6 @@ public class Particular extends User {
 	@Column(name = "particular_location")
 	private String particularLocation;
 
-	@NotBlank
 	@Column(name = "particular_email", nullable = false)
 	private String particularEmail;
 
