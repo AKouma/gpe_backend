@@ -17,6 +17,7 @@ public class ParticularDto {
 	 private Date particularUpdateDate;
 	 private boolean particularIsDeleted;
 	 private String particularLocation;
+	 private String photo;
 	 private String category;
 	 
 	 public ParticularDto() {
@@ -35,6 +36,7 @@ public class ParticularDto {
 		 this.setParticularUpdateDate(particular.getParticularUpdateDate());
 		 this.setParticularLocation(particular.getParticularLocation());
 		 this.setCategory(particular.getCategory());
+		 this.setPhoto(particular.getPhoto());
 		}
 
 	public int getParticularId() {
@@ -124,5 +126,12 @@ public class ParticularDto {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	 
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	} 
 }

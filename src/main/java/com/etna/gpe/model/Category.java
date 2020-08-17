@@ -15,32 +15,32 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "category_id") 
+	@Column(name = "category_id")
 	int categoryId;
-	
-	@Column(name ="category_description", nullable = false)
+
+	@Column(name = "category_description", nullable = false)
 	String categoryDescription;
-	
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name ="category_create_date")
+	@Column(name = "category_create_date")
 	Date categoryCreateDate;
-	
+
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name ="category_update_date")
+	@Column(name = "category_update_date")
 	Date categoryUpdateDate;
-	
-	@Column(name ="category_is_deleted")
+
+	@Column(name = "category_is_deleted")
 	boolean categoryisDeleted;
-	
-	@Column(name ="category_name", nullable = false)
+
+	@Column(name = "category_name", nullable = false)
 	String categoryName;
 	
-	
+	public Category() {}
 
 	public Category(CategoryDto categoryDto) {
-		if(categoryDto.getCategoryId() > 0)
+		if (categoryDto.getCategoryId() > 0)
 			this.setCategoryId(categoryDto.getCategoryId());
 		this.setCategoryDescription(categoryDto.getCategoryDescription());
 		this.setCategoryName(categoryDto.getCategoryName());
@@ -48,16 +48,12 @@ public class Category {
 		this.setCategoryUpdateDate(categoryDto.getCategoryUpdateDate());
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Category [categoryId=" + categoryId + ", categoryDescription=" + categoryDescription
 				+ ", categoryCreateDate=" + categoryCreateDate + ", categoryUpdateDate=" + categoryUpdateDate
 				+ ", categoryisDeleted=" + categoryisDeleted + ", categoryName=" + categoryName + "]";
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -71,8 +67,6 @@ public class Category {
 		result = prime * result + (categoryisDeleted ? 1231 : 1237);
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -109,8 +103,6 @@ public class Category {
 			return false;
 		return true;
 	}
-
-
 
 	public int getCategoryId() {
 		return categoryId;
@@ -159,6 +151,5 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
-	
+
 }

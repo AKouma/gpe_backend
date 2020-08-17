@@ -11,17 +11,18 @@ public class CategoryDto {
 	Date categoryUpdateDate;
 	boolean categoryisDeleted;
 	String categoryName;
-	
+
 	public CategoryDto(Category category) {
-		if(category.getCategoryId() > 0)
+		if (category.getCategoryId() > 0)
 			this.setCategoryId(category.getCategoryId());
 		this.setCategoryDescription(category.getCategoryDescription());
 		this.setCategoryName(category.getCategoryName());
 		this.setCategoryCreateDate(category.getCategoryCreateDate());
 		this.setCategoryUpdateDate(category.getCategoryUpdateDate());
 	}
-	
-	public CategoryDto() {}
+
+	public CategoryDto() {
+	}
 
 	public int getCategoryId() {
 		return categoryId;

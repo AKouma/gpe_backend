@@ -22,6 +22,7 @@ public class EventDto {
 	private boolean eventIsDeleted;
 	private Community community;
 	private CategoryDto category;
+	private String categoryName;
 	private String eventMakerEmail;
 	private String picture;
 	private List<Particular> participants;
@@ -163,6 +164,14 @@ public class EventDto {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 	
 }
