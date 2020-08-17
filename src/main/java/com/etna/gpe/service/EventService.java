@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.controller.customexception.ResourceNotExist;
 import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AddParticipantDto;
+import com.etna.gpe.dto.CategoryDto;
 import com.etna.gpe.dto.EventDto;
+import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
 import com.etna.gpe.model.Organization;
 import com.etna.gpe.model.Particular;
+import com.etna.gpe.model.User;
+import com.etna.gpe.repository.CategoryRepository;
 import com.etna.gpe.repository.EventRepository;
 import com.etna.gpe.repository.OrganizationRepository;
 import com.etna.gpe.repository.ParticularRepository;
@@ -33,6 +38,9 @@ public class EventService {
 
 	@Autowired
 	OrganizationRepository organizationRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	public List<EventDto> getEventDtoListFromEventIterator(Iterator<Event> events) {
 		List<EventDto> eventDtoList;
@@ -49,7 +57,7 @@ public class EventService {
 		return eventDtoList;
 	}
 
-	public List<EventDto> getAllEventsUserMade(Object user) {
+	public List<EventDto> getAllEventsUserMade(User user) {
 		List<EventDto> eventDto = new ArrayList<EventDto>();
 		if (user instanceof Organization) {
 			eventDto.addAll(toEventDtoList(
@@ -61,17 +69,18 @@ public class EventService {
 		return eventDto;
 	}
 
-	public List<EventDto> getAllEventUserParticipate(Object user) {
+	public List<EventDto> getAllEventUserParticipate(User user) {
 		List<EventDto> eventDto = getEventDtoListFromEventIterator(eventRepository.findAll().iterator());
+		List<EventDto> result = new ArrayList<>();
 		if (user instanceof Particular) {
-			eventDto.addAll(eventDto.stream().filter(e -> e.getParticipants().contains((Particular) user))
+			result.addAll(eventDto.stream().filter(e -> e.getParticipants().contains((Particular) user))
 					.collect(Collectors.toList()));
 		} else if (user instanceof Organization) {
-			eventDto.addAll(
+			result.addAll(
 					eventDto.stream().filter(e -> e.getOrganizationsAsParticipants().contains((Organization) user))
 							.collect(Collectors.toList()));
 		}
-		return eventDto;
+		return result;
 	}
 
 	private List<EventDto> toEventDtoList(List<Event> events) {
@@ -87,11 +96,20 @@ public class EventService {
 
 	public EventDto createEventOrUpdate(@NonNull EventDto dto) {
 		Event event = null;
+		
 		try {
 			event = eventRepository.findById(dto.getEventId()).get();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			if (event == null) {
+				
+				Category category = categoryRepository.findCategoryByCategoryName(dto.getCategoryName());
+				if(category == null)
+					throw new ParametersNotFound();
+				
+				CategoryDto categoryDto = new CategoryDto(category);
+				dto.setCategory(categoryDto);
+				
 				event = new Event(dto);
 				Community community = new Community();
 				community.setCommunityAdmin(dto.getEventMakerEmail());
@@ -102,6 +120,7 @@ public class EventService {
 				throw new ServerError();
 
 			dto = new EventDto(event);
+			dto.setCategoryName(event.getCategory().getCategoryName());
 		}
 		return dto;
 	}

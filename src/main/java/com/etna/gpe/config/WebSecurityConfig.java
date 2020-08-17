@@ -57,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/organization/all_organization").permitAll()
 			.antMatchers(HttpMethod.POST, "/particular/create_particular").permitAll()
 			.antMatchers(HttpMethod.POST, "/particular/all_particular").permitAll()
-			.antMatchers(HttpMethod.POST, "/event/search_events").permitAll()
+			.antMatchers(HttpMethod.GET, "/event/search_events").permitAll()
+			.antMatchers(HttpMethod.GET, "/category/search_category").permitAll()
 			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll() //for allow cors policy request
 			.anyRequest()
 			.authenticated();

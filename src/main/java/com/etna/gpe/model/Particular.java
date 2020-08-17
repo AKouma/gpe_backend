@@ -59,9 +59,11 @@ public class Particular extends User {
 	@Column(name = "particular_location")
 	private String particularLocation;
 
-	@NotBlank
 	@Column(name = "particular_email", nullable = false)
 	private String particularEmail;
+	
+	@Column(name = "particular_photo")
+	private String photo;
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -92,6 +94,7 @@ public class Particular extends User {
 		this.setParticularPhonenumber(particularDto.getParticularPhonenumber());
 		this.setParticularUpdateDate(particularDto.getParticularUpdateDate());
 		this.setParticularLocation(particularDto.getParticularLocation());
+		this.setPhoto(particularDto.getPhoto());
 		if (particularDto.getCategory() != null)
 			this.setCategory(particularDto.getCategory());
 	}
@@ -182,6 +185,14 @@ public class Particular extends User {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 }

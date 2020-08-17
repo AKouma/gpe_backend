@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.lang.NonNull;
 
-import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
 import com.etna.gpe.model.Organization;
@@ -22,7 +21,8 @@ public class EventDto {
 	private Date eventDate;
 	private boolean eventIsDeleted;
 	private Community community;
-	private Category category;
+	private CategoryDto category;
+	private String categoryName;
 	private String eventMakerEmail;
 	private String picture;
 	private List<Particular> participants;
@@ -32,7 +32,7 @@ public class EventDto {
 	}
 
 	public EventDto(@NonNull Event event) {
-		this.setCategory(event.getCategory());
+		this.setCategory(new CategoryDto(event.getCategory()));
 		this.setCommunity(event.getCommunity());
 		this.setEventCreateDate(event.getEventCreateDate());
 		this.setEventDate(event.getEventDate());
@@ -120,11 +120,11 @@ public class EventDto {
 		this.community = community;
 	}
 
-	public Category getCategory() {
+	public CategoryDto getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CategoryDto category) {
 		this.category = category;
 	}
 
@@ -164,6 +164,14 @@ public class EventDto {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 	
 }
