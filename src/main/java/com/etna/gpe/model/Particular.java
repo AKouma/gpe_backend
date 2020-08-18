@@ -62,7 +62,7 @@ public class Particular extends User {
 	@Column(name = "particular_email", nullable = false)
 	private String particularEmail;
 	
-	@Column(name = "particular_photo")
+	@Column(name = "particular_photo", length = 1000000)
 	private String photo;
 
 	@CreationTimestamp

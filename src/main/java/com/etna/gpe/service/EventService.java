@@ -16,12 +16,14 @@ import com.etna.gpe.controller.customexception.ServerError;
 import com.etna.gpe.dto.AddParticipantDto;
 import com.etna.gpe.dto.CategoryDto;
 import com.etna.gpe.dto.EventDto;
+import com.etna.gpe.dto.EventSearchResponseDto;
 import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
 import com.etna.gpe.model.Organization;
 import com.etna.gpe.model.Particular;
 import com.etna.gpe.model.User;
+import com.etna.gpe.pager.Pager;
 import com.etna.gpe.repository.CategoryRepository;
 import com.etna.gpe.repository.EventRepository;
 import com.etna.gpe.repository.OrganizationRepository;
@@ -127,16 +129,23 @@ public class EventService {
 		return dto;
 	}
 
-	public List<EventDto> searchEvents(String placeCriteria, String titleCriteria, String categoryCriteria,
-			String descriptionCriteria, String eventMakerCriteria, Date dateCriteria) {
+	public EventSearchResponseDto searchEvents(String placeCriteria, String titleCriteria, String categoryCriteria,
+			String descriptionCriteria, String eventMakerCriteria, Date dateCriteria, int pageRequested) {
+		
+		int totalPage = 0;
+		EventSearchResponseDto response = new EventSearchResponseDto();
 		List<EventDto> eventFound = new ArrayList<>();
-		Iterator<Event> events = eventRepository.findAll().iterator();
+		Iterator<Event> events = eventRepository.findAll(Pager.getEventPageable(pageRequested)).iterator();
 
 		if (StringUtils.isEmptyOrNull(placeCriteria) && StringUtils.isEmptyOrNull(titleCriteria)
 				&& StringUtils.isEmptyOrNull(categoryCriteria) && StringUtils.isEmptyOrNull(descriptionCriteria)
-				&& StringUtils.isEmptyOrNull(eventMakerCriteria) && dateCriteria == null)
-
+				&& StringUtils.isEmptyOrNull(eventMakerCriteria) && dateCriteria == null) {
+			
 			eventFound.addAll(getEventDtoListFromEventIterator(events));
+			//filter activate events
+			eventFound = eventFound.stream().filter(e -> !e.isEventIsDeleted() && 
+					DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
+		}	
 		else {
 			// get all events into list
 			List<Event> eventList = new ArrayList<>();
@@ -189,7 +198,11 @@ public class EventService {
 				eventFound.addAll(toEventDtoList(eventList));
 			}
 		}
-		return eventFound;
+		totalPage = getNumberOfPage(eventFound);
+		response.setEvents(eventFound);
+		response.setTotalPage(totalPage);
+		
+		return response;
 	}
 
 	public void deletedEvent(int eventId) {
@@ -279,6 +292,11 @@ public class EventService {
 		EventDto eventDto = new EventDto(event);
 
 		return eventDto;
+	}
+	
+	private int getNumberOfPage(List<EventDto> list) {
+		int quotient = list.size() / 15; // each page requires at most 15 elements
+		return list.size() % 15 > 0 ? quotient + 1 : quotient;
 	}
 
 }

@@ -37,7 +37,7 @@ public class Organization extends User {
 	@Column(name="organization_location", nullable = false)
 	private String organizationLocation;
 	
-	@Column(name="organization_logo")
+	@Column(name="organization_logo", length = 1000000)
 	private String organizationLogo;
 	
 	@Column(name="organization_description", nullable = false)
