@@ -1,5 +1,7 @@
 package com.etna.gpe.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,11 +9,11 @@ import javax.persistence.*;
 public class Message {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "message_id")
 	int messageId;
 	
-	@Column(name = "message_value")
+	@Column(name = "message_value", length = 1000000)
 	String messageValue;
 	
 	@Column(name = "message_sender")
@@ -21,10 +23,10 @@ public class Message {
 	String messageReceivers;
 	
 	@Column(name = "message_create_date")
-	String messageCreateDate;
+	Date messageCreateDate;
 	
 	@Column(name = "message_update_date")
-	String messageUpdateDate;
+	Date messageUpdateDate;
 	
 	@Column(name = "message_is_deleted")
 	boolean messageIsDeleted;
@@ -71,19 +73,19 @@ public class Message {
 		this.messageReceivers = messageReceivers;
 	}
 
-	public String getMessageCreateDate() {
+	public Date getMessageCreateDate() {
 		return messageCreateDate;
 	}
 
-	public void setMessageCreateDate(String messageCreateDate) {
+	public void setMessageCreateDate(Date messageCreateDate) {
 		this.messageCreateDate = messageCreateDate;
 	}
 
-	public String getMessageUpdateDate() {
+	public Date getMessageUpdateDate() {
 		return messageUpdateDate;
 	}
 
-	public void setMessageUpdateDate(String messageUpdateDate) {
+	public void setMessageUpdateDate(Date messageUpdateDate) {
 		this.messageUpdateDate = messageUpdateDate;
 	}
 

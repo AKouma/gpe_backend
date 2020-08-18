@@ -10,4 +10,11 @@ public class DateUtils {
 		
 		return eventDate.getTime() - todayInMilliSecond > 0;
 	}
+	
+public static boolean isEqualDate(Date eventDate, Date searchDate) {
+		
+		long todayInMilliSecond = searchDate.getTime();
+		
+		return eventDate.getTime() - todayInMilliSecond == 0;
+	}
 }

@@ -11,5 +11,11 @@ public class StringUtils {
 	public static boolean verifyHash(String passwordToCheck, String passwordhashed) {
 		return BCrypt.checkpw(passwordToCheck, passwordhashed);
 	}
+	
+
+	
+	public static boolean isEmptyOrNull(String criteria) {
+		return criteria == null || criteria.isEmpty();
+	}
 
 }

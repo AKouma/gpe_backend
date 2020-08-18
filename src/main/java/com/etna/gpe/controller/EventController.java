@@ -1,8 +1,10 @@
 package com.etna.gpe.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.dto.AddParticipantDto;
 import com.etna.gpe.dto.EventDto;
+import com.etna.gpe.dto.EventSearchResponseDto;
 import com.etna.gpe.service.EventService;
 
 @RestController
@@ -26,8 +29,13 @@ public class EventController {
 
 	@GetMapping("/search_events")
 	@ResponseStatus(HttpStatus.OK)
-	List<EventDto> searchEvents(@RequestParam String criteria) {
-		return eventService.searchEvents(criteria);
+	EventSearchResponseDto searchEvents(@RequestParam String placeCriteria,@RequestParam String titleCriteria,
+			@RequestParam String categoryCriteria, @RequestParam String descriptionCriteria, 
+			@RequestParam String eventMakerCriteria,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria,
+			@RequestParam int pageRequested) {
+		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria,
+				descriptionCriteria, eventMakerCriteria, dateCriteria, pageRequested);
 	}
 
 	@PostMapping("/create_event")
@@ -40,9 +48,15 @@ public class EventController {
 	}
 	
 	@GetMapping("/deleted_events")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.RESET_CONTENT)
 	void deletedEvent(@RequestParam int eventId) {
 		eventService.deletedEvent(eventId);
+	}
+	
+	@GetMapping("/event_id")
+	@ResponseStatus(HttpStatus.OK)
+	void findById(@RequestParam int eventId) {
+		eventService.findById(eventId);
 	}
 	
 	@PostMapping("/add_participant_event")

@@ -36,7 +36,7 @@ public class Particular extends User {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "particular_id")
 	private int particularId;
 
@@ -62,7 +62,7 @@ public class Particular extends User {
 	@Column(name = "particular_email", nullable = false)
 	private String particularEmail;
 	
-	@Column(name = "particular_photo")
+	@Column(name = "particular_photo", length = 1000000)
 	private String photo;
 
 	@CreationTimestamp
