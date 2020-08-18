@@ -17,7 +17,7 @@ public class Event {
 
 	@Id
 	@Column(name = "event_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int eventId;
 
 	@Column(name = "event_title", nullable = false)

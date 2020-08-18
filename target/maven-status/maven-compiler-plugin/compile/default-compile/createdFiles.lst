@@ -1,3 +1,4 @@
+com/etna/gpe/controller/CategoryController.class
 com/etna/gpe/repository/CommunityRepository.class
 com/etna/gpe/controller/customexception/ResourceAlreadyExist.class
 com/etna/gpe/model/Community.class

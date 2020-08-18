@@ -12,7 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Community {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "community_id")
 	int communityId;
 	

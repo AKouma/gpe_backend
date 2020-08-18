@@ -1,5 +1,6 @@
 package com.etna.gpe.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,10 @@ public class EventController {
 
 	@GetMapping("/search_events")
 	@ResponseStatus(HttpStatus.OK)
-	List<EventDto> searchEvents(@RequestParam String criteria) {
-		return eventService.searchEvents(criteria);
+	List<EventDto> searchEvents(@RequestParam String placeCriteria,@RequestParam String titleCriteria,
+			@RequestParam String categoryCriteria, @RequestParam String descriptionCriteria, 
+			@RequestParam String eventMakerCriteria, @RequestParam Date dateCriteria) {
+		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria, descriptionCriteria, eventMakerCriteria, dateCriteria);
 	}
 
 	@PostMapping("/create_event")
@@ -40,9 +43,15 @@ public class EventController {
 	}
 	
 	@GetMapping("/deleted_events")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.RESET_CONTENT)
 	void deletedEvent(@RequestParam int eventId) {
 		eventService.deletedEvent(eventId);
+	}
+	
+	@GetMapping("/event_id")
+	@ResponseStatus(HttpStatus.OK)
+	void findById(@RequestParam int eventId) {
+		eventService.findById(eventId);
 	}
 	
 	@PostMapping("/add_participant_event")

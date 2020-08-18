@@ -1,6 +1,7 @@
 package com.etna.gpe.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ import com.etna.gpe.repository.EventRepository;
 import com.etna.gpe.repository.OrganizationRepository;
 import com.etna.gpe.repository.ParticularRepository;
 import com.etna.gpe.utils.DateUtils;
+import com.etna.gpe.utils.StringUtils;
 
 @Service
 public class EventService {
@@ -38,7 +40,7 @@ public class EventService {
 
 	@Autowired
 	OrganizationRepository organizationRepository;
-	
+
 	@Autowired
 	CategoryRepository categoryRepository;
 
@@ -96,20 +98,20 @@ public class EventService {
 
 	public EventDto createEventOrUpdate(@NonNull EventDto dto) {
 		Event event = null;
-		
+
 		try {
 			event = eventRepository.findById(dto.getEventId()).get();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			if (event == null) {
-				
+
 				Category category = categoryRepository.findCategoryByCategoryName(dto.getCategoryName());
-				if(category == null)
+				if (category == null)
 					throw new ParametersNotFound();
-				
+
 				CategoryDto categoryDto = new CategoryDto(category);
 				dto.setCategory(categoryDto);
-				
+
 				event = new Event(dto);
 				Community community = new Community();
 				community.setCommunityAdmin(dto.getEventMakerEmail());
@@ -125,78 +127,66 @@ public class EventService {
 		return dto;
 	}
 
-	public List<EventDto> searchEvents(String criteria) {
+	public List<EventDto> searchEvents(String placeCriteria, String titleCriteria, String categoryCriteria,
+			String descriptionCriteria, String eventMakerCriteria, Date dateCriteria) {
 		List<EventDto> eventFound = new ArrayList<>();
 		Iterator<Event> events = eventRepository.findAll().iterator();
 
-		if (criteria == null || criteria.isEmpty())
+		if (StringUtils.isEmptyOrNull(placeCriteria) && StringUtils.isEmptyOrNull(titleCriteria)
+				&& StringUtils.isEmptyOrNull(categoryCriteria) && StringUtils.isEmptyOrNull(descriptionCriteria)
+				&& StringUtils.isEmptyOrNull(eventMakerCriteria) && dateCriteria == null)
+
 			eventFound.addAll(getEventDtoListFromEventIterator(events));
 		else {
-			try {
-				// find by ID
-				int idToFind = Integer.parseInt(criteria);
-				EventDto dtoById = new EventDto(eventRepository.findById(idToFind).get());
-				eventFound.add(dtoById);
-			} catch (NumberFormatException exception) {
-				System.err.print("search by criteria");
-				// get all events into list
-				List<Event> eventList = new ArrayList<>();
-				events.forEachRemaining(eventList::add);
+			// get all events into list
+			List<Event> eventList = new ArrayList<>();
+			events.forEachRemaining(eventList::add);
 
-				// search by event title
-				List<Event> eventByTitle = eventList.stream().filter(e -> criteria.equalsIgnoreCase(e.getEventTitle())
+			// search by event title
+			if (titleCriteria != null && !titleCriteria.isEmpty()) {
+				eventList = eventList.stream().filter(e -> titleCriteria.equalsIgnoreCase(e.getEventTitle())
 						&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
+			}
 
-				// search by event place
-				List<Event> eventByPlace = eventList.stream().filter(e -> criteria.equalsIgnoreCase(e.getEventPlace())
+			// search by event place
+			if (placeCriteria != null && !placeCriteria.isEmpty()) {
+				eventList = eventList.stream().filter(e -> placeCriteria.equalsIgnoreCase(e.getEventPlace())
 						&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
+			}
 
-				// search by event category
-				List<Event> eventByCategory = eventList.stream()
-						.filter(e -> criteria.equalsIgnoreCase(e.getCategory().getCategoryName())
+			// search by event category
+			if (categoryCriteria != null && !categoryCriteria.isEmpty()) {
+				eventList = eventList.stream()
+						.filter(e -> categoryCriteria.equalsIgnoreCase(e.getCategory().getCategoryName())
 								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
 						.collect(Collectors.toList());
+			}
 
-				// search by event date
-				List<Event> eventByDate = eventList.stream()
-						.filter(e -> !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
-						.collect(Collectors.toList());
-
-				// search by event Description
-				List<Event> eventByDescription = eventList.stream()
-						.filter(e -> e.getEventDescription().contains(criteria) && !e.isEventIsDeleted()
+			// search by event date
+			if (dateCriteria != null) {
+				eventList = eventList.stream()
+						.filter(e -> !e.isEventIsDeleted() && DateUtils.isEqualDate(e.getEventDate(), dateCriteria)
 								&& DateUtils.isOnline(e.getEventDate()))
 						.collect(Collectors.toList());
+			}
 
-				// search by event Event maker mail
-				List<Event> eventByEventMakerMail = eventList.stream()
-						.filter(e -> criteria.equalsIgnoreCase(e.getEventMakerEmail()) && !e.isEventIsDeleted()
-								&& DateUtils.isOnline(e.getEventDate()))
+			// search by event Description
+			if (descriptionCriteria != null && !descriptionCriteria.isEmpty()) {
+				eventList = eventList
+						.stream().filter(e -> e.getEventDescription().contains(descriptionCriteria)
+								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
 						.collect(Collectors.toList());
+			}
 
-				if (eventByTitle != null && !eventByTitle.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByTitle));
-				}
-
-				if (eventByPlace != null && !eventByPlace.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByPlace));
-				}
-
-				if (eventByCategory != null && !eventByCategory.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByCategory));
-				}
-
-				if (eventByDate != null && !eventByDate.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByDate));
-				}
-
-				if (eventByDescription != null && !eventByDescription.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByDescription));
-				}
-
-				if (eventByEventMakerMail != null && !eventByEventMakerMail.isEmpty()) {
-					eventFound.addAll(toEventDtoList(eventByEventMakerMail));
-				}
+			// search by event Event maker mail
+			if (eventMakerCriteria != null && !eventMakerCriteria.isEmpty()) {
+				eventList = eventList.stream()
+						.filter(e -> eventMakerCriteria.equalsIgnoreCase(e.getEventMakerEmail())
+								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
+						.collect(Collectors.toList());
+			}
+			if (eventList != null && !eventList.isEmpty()) {
+				eventFound.addAll(toEventDtoList(eventList));
 			}
 		}
 		return eventFound;
@@ -209,6 +199,14 @@ public class EventService {
 
 		eventToDelete.setEventIsDeleted(true);
 		eventRepository.save(eventToDelete);
+	}
+	
+	public EventDto findById(int id) {
+		Event event = eventRepository.findById(id).get();
+		if(event == null || event.isEventIsDeleted())
+			throw new ResourceNotExist();
+		
+		return new EventDto(event);
 	}
 
 	public EventDto addParticipantToEvent(AddParticipantDto dto) {

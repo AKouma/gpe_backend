@@ -36,7 +36,7 @@ public class Particular extends User {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "particular_id")
 	private int particularId;
 

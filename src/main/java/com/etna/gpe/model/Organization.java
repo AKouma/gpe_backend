@@ -15,7 +15,7 @@ import com.etna.gpe.dto.OrganizationDto;
 public class Organization extends User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "organization_id") 
 	int organizationId;
 	
