@@ -3,6 +3,8 @@ package com.etna.gpe.controller;
 import com.etna.gpe.controller.customexception.ParametersNotFound;
 import com.etna.gpe.dto.AuthenDto;
 import com.etna.gpe.dto.AuthenResponseDto;
+import com.etna.gpe.dto.HomeDto;
+import com.etna.gpe.service.EventService;
 import com.etna.gpe.service.OrganizationService;
 import com.etna.gpe.service.ParticularService;
 
@@ -10,6 +12,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,9 @@ public class AuthentifacationController {
     
     @Autowired
     OrganizationService organizationService;
+    
+    @Autowired
+    EventService eventService;
 
     
     @PostMapping("/login_organization")
@@ -45,5 +51,11 @@ public class AuthentifacationController {
     		throw new ParametersNotFound();
         return
         		particularService.getParticularByEmailAndPassword(authenDto.getEmail(), authenDto.getPassword());
+    }
+    
+    @GetMapping("/home")
+    @ResponseStatus(HttpStatus.OK)
+    HomeDto getHomeInfo() {
+    	return eventService.getHomeInfo();
     }
 }

@@ -17,6 +17,7 @@ import com.etna.gpe.dto.AddParticipantDto;
 import com.etna.gpe.dto.CategoryDto;
 import com.etna.gpe.dto.EventDto;
 import com.etna.gpe.dto.EventSearchResponseDto;
+import com.etna.gpe.dto.HomeDto;
 import com.etna.gpe.model.Category;
 import com.etna.gpe.model.Community;
 import com.etna.gpe.model.Event;
@@ -130,8 +131,9 @@ public class EventService {
 	}
 
 	public EventSearchResponseDto searchEvents(String placeCriteria, String titleCriteria, String categoryCriteria,
-			String descriptionCriteria, String eventMakerCriteria, Date dateCriteria, int pageRequested) {
-		
+			String descriptionCriteria, String eventMakerCriteria, Date dateCriteria1, Date dateCriteria2,
+			int pageRequested) {
+
 		int totalPage = 0;
 		EventSearchResponseDto response = new EventSearchResponseDto();
 		List<EventDto> eventFound = new ArrayList<>();
@@ -139,14 +141,13 @@ public class EventService {
 
 		if (StringUtils.isEmptyOrNull(placeCriteria) && StringUtils.isEmptyOrNull(titleCriteria)
 				&& StringUtils.isEmptyOrNull(categoryCriteria) && StringUtils.isEmptyOrNull(descriptionCriteria)
-				&& StringUtils.isEmptyOrNull(eventMakerCriteria) && dateCriteria == null) {
-			
+				&& StringUtils.isEmptyOrNull(eventMakerCriteria) && dateCriteria1 == null && dateCriteria2 == null) {
+
 			eventFound.addAll(getEventDtoListFromEventIterator(events));
-			//filter activate events
-			eventFound = eventFound.stream().filter(e -> !e.isEventIsDeleted() && 
-					DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
-		}	
-		else {
+			// filter activate events
+			eventFound = eventFound.stream().filter(e -> !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
+					.collect(Collectors.toList());
+		} else {
 			// get all events into list
 			List<Event> eventList = new ArrayList<>();
 			events.forEachRemaining(eventList::add);
@@ -172,9 +173,10 @@ public class EventService {
 			}
 
 			// search by event date
-			if (dateCriteria != null) {
+			if (dateCriteria1 != null) {
 				eventList = eventList.stream()
-						.filter(e -> !e.isEventIsDeleted() && DateUtils.isEqualDate(e.getEventDate(), dateCriteria)
+						.filter(e -> !e.isEventIsDeleted()
+								&& DateUtils.isEligibled(dateCriteria1, dateCriteria2, e.getEventDate())
 								&& DateUtils.isOnline(e.getEventDate()))
 						.collect(Collectors.toList());
 			}
@@ -201,7 +203,7 @@ public class EventService {
 		totalPage = getNumberOfPage(eventFound);
 		response.setEvents(eventFound);
 		response.setTotalPage(totalPage);
-		
+
 		return response;
 	}
 
@@ -213,12 +215,12 @@ public class EventService {
 		eventToDelete.setEventIsDeleted(true);
 		eventRepository.save(eventToDelete);
 	}
-	
+
 	public EventDto findById(int id) {
 		Event event = eventRepository.findById(id).get();
-		if(event == null || event.isEventIsDeleted())
+		if (event == null || event.isEventIsDeleted())
 			throw new ResourceNotExist();
-		
+
 		return new EventDto(event);
 	}
 
@@ -293,10 +295,36 @@ public class EventService {
 
 		return eventDto;
 	}
-	
+
 	private int getNumberOfPage(List<EventDto> list) {
 		int quotient = list.size() / 15; // each page requires at most 15 elements
 		return list.size() % 15 > 0 ? quotient + 1 : quotient;
+	}
+    //todo : have to optimize by using sql
+	public HomeDto getHomeInfo() {
+		HomeDto homeDto = new HomeDto();
+		
+		int eventNumber = 10;
+		int particularNumber = 10;
+		int organizationNumber = 10;
+
+		participantRepository.findAll().forEach(p -> {
+			//if (!p.isParticularIsDeleted())
+				// Todo
+		});
+		organizationRepository.findAll().forEach(o -> {
+			//if (!o.isOrganizationIsDeleted())
+				// Todo
+		});
+		eventRepository.findAll().forEach(e -> {
+			//if (!e.isEventIsDeleted())
+				// Todo
+		});
+		homeDto.setEventNumber(eventNumber);
+		homeDto.setOrganizationNumber(organizationNumber);
+		homeDto.setParticularNumber(particularNumber);
+		
+		return homeDto;
 	}
 
 }

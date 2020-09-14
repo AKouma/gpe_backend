@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/authen/login_organization").permitAll()
 			.antMatchers(HttpMethod.POST, "/authen/login_particular").permitAll()
+			.antMatchers(HttpMethod.GET, "/authen/home").permitAll()
 			.antMatchers(HttpMethod.POST, "/organization/create_organization").permitAll()
 			.antMatchers(HttpMethod.POST, "/organization/all_organization").permitAll()
 			.antMatchers(HttpMethod.POST, "/particular/create_particular").permitAll()

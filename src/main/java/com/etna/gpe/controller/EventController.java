@@ -1,7 +1,6 @@
 package com.etna.gpe.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,10 +31,11 @@ public class EventController {
 	EventSearchResponseDto searchEvents(@RequestParam String placeCriteria,@RequestParam String titleCriteria,
 			@RequestParam String categoryCriteria, @RequestParam String descriptionCriteria, 
 			@RequestParam String eventMakerCriteria,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria1,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria2,
 			@RequestParam int pageRequested) {
 		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria,
-				descriptionCriteria, eventMakerCriteria, dateCriteria, pageRequested);
+				descriptionCriteria, eventMakerCriteria, dateCriteria1, dateCriteria1, pageRequested);
 	}
 
 	@PostMapping("/create_event")
