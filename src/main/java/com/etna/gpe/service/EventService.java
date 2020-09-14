@@ -300,29 +300,35 @@ public class EventService {
 		int quotient = list.size() / 15; // each page requires at most 15 elements
 		return list.size() % 15 > 0 ? quotient + 1 : quotient;
 	}
+	
+	
     //todo : have to optimize by using sql
 	public HomeDto getHomeInfo() {
 		HomeDto homeDto = new HomeDto();
 		
-		int eventNumber = 10;
-		int particularNumber = 10;
-		int organizationNumber = 10;
-
-		participantRepository.findAll().forEach(p -> {
-			//if (!p.isParticularIsDeleted())
-				// Todo
-		});
-		organizationRepository.findAll().forEach(o -> {
-			//if (!o.isOrganizationIsDeleted())
-				// Todo
-		});
-		eventRepository.findAll().forEach(e -> {
-			//if (!e.isEventIsDeleted())
-				// Todo
-		});
-		homeDto.setEventNumber(eventNumber);
-		homeDto.setOrganizationNumber(organizationNumber);
-		homeDto.setParticularNumber(particularNumber);
+		List<Event> eventNumberList	= new ArrayList<Event>();
+		eventRepository.findAll().iterator().forEachRemaining(
+				e-> {
+					if(!e.isEventIsDeleted())
+						eventNumberList.add(e);
+					});
+		
+		List<Particular> particularNumberList = new ArrayList<Particular>();
+		participantRepository.findAll().iterator().forEachRemaining(p->{
+				if(!p.isParticularIsDeleted())
+				particularNumberList.add(p);
+				});
+		
+		List<Organization> organizationNumberList = new ArrayList<Organization>();
+		organizationRepository.findAll().iterator().forEachRemaining(o->
+				{
+					if(!o.isOrganizationIsDeleted())
+						organizationNumberList.add(o);
+				});
+		
+		homeDto.setEventNumber(eventNumberList.size());
+		homeDto.setOrganizationNumber(organizationNumberList.size());
+		homeDto.setParticularNumber(particularNumberList.size());
 		
 		return homeDto;
 	}

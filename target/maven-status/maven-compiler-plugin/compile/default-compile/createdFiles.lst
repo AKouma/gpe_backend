@@ -17,6 +17,7 @@ com/etna/gpe/utils/DateUtils.class
 com/etna/gpe/controller/customexception/ServerError.class
 com/etna/gpe/service/OrganizationService.class
 com/etna/gpe/dto/ParticularDto.class
+com/etna/gpe/dto/HomeDto.class
 com/etna/gpe/dto/AuthenResponseDto.class
 com/etna/gpe/model/Particular.class
 com/etna/gpe/model/Category.class

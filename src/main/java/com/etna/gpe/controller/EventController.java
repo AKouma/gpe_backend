@@ -35,7 +35,7 @@ public class EventController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria2,
 			@RequestParam int pageRequested) {
 		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria,
-				descriptionCriteria, eventMakerCriteria, dateCriteria1, dateCriteria1, pageRequested);
+				descriptionCriteria, eventMakerCriteria, dateCriteria1, dateCriteria2, pageRequested);
 	}
 
 	@PostMapping("/create_event")

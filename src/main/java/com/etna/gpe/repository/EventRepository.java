@@ -29,5 +29,4 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Integ
 
 	@Query("select e from Event e where e.eventMakerEmail =:organizationEmail")
 	List<Event> getEventByEventMakerOrganization(String organizationEmail);
-
 }
