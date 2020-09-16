@@ -31,8 +31,8 @@ public class EventController {
 	EventSearchResponseDto searchEvents(@RequestParam String placeCriteria,@RequestParam String titleCriteria,
 			@RequestParam String categoryCriteria, @RequestParam String descriptionCriteria, 
 			@RequestParam String eventMakerCriteria,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria1,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateCriteria2,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria1,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria2,
 			@RequestParam int pageRequested) {
 		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria,
 				descriptionCriteria, eventMakerCriteria, dateCriteria1, dateCriteria2, pageRequested);
