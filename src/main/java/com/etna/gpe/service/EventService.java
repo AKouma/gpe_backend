@@ -30,6 +30,7 @@ import com.etna.gpe.repository.EventRepository;
 import com.etna.gpe.repository.OrganizationRepository;
 import com.etna.gpe.repository.ParticularRepository;
 import com.etna.gpe.utils.DateUtils;
+import com.etna.gpe.utils.EventUtils;
 import com.etna.gpe.utils.StringUtils;
 
 @Service
@@ -153,19 +154,19 @@ public class EventService {
 			events.forEachRemaining(eventList::add);
 
 			// search by event title
-			if (titleCriteria != null && !titleCriteria.isEmpty()) {
+			if (titleCriteria != null && !titleCriteria.isEmpty() && !titleCriteria.isBlank()) {
 				eventList = eventList.stream().filter(e -> titleCriteria.equalsIgnoreCase(e.getEventTitle())
 						&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
 			}
 
 			// search by event place
-			if (placeCriteria != null && !placeCriteria.isEmpty()) {
-				eventList = eventList.stream().filter(e -> placeCriteria.equalsIgnoreCase(e.getEventPlace())
+			if (placeCriteria != null && !placeCriteria.isEmpty() && !placeCriteria.isBlank()) {
+				eventList = eventList.stream().filter(e -> EventUtils.isLocation(placeCriteria, e.getEventPlace())
 						&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate())).collect(Collectors.toList());
 			}
 
 			// search by event category
-			if (categoryCriteria != null && !categoryCriteria.isEmpty()) {
+			if (categoryCriteria != null && !categoryCriteria.isEmpty() && !categoryCriteria.isBlank()) {
 				eventList = eventList.stream()
 						.filter(e -> categoryCriteria.equalsIgnoreCase(e.getCategory().getCategoryName())
 								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
@@ -182,7 +183,7 @@ public class EventService {
 			}
 
 			// search by event Description
-			if (descriptionCriteria != null && !descriptionCriteria.isEmpty()) {
+			if (descriptionCriteria != null && !descriptionCriteria.isEmpty() && !descriptionCriteria.isBlank()) {
 				eventList = eventList
 						.stream().filter(e -> e.getEventDescription().contains(descriptionCriteria)
 								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))
@@ -190,7 +191,7 @@ public class EventService {
 			}
 
 			// search by event Event maker mail
-			if (eventMakerCriteria != null && !eventMakerCriteria.isEmpty()) {
+			if (eventMakerCriteria != null && !eventMakerCriteria.isEmpty() && !eventMakerCriteria.isBlank()) {
 				eventList = eventList.stream()
 						.filter(e -> eventMakerCriteria.equalsIgnoreCase(e.getEventMakerEmail())
 								&& !e.isEventIsDeleted() && DateUtils.isOnline(e.getEventDate()))

@@ -28,11 +28,13 @@ public class EventController {
 
 	@GetMapping("/search_events")
 	@ResponseStatus(HttpStatus.OK)
-	EventSearchResponseDto searchEvents(@RequestParam String placeCriteria,@RequestParam String titleCriteria,
-			@RequestParam String categoryCriteria, @RequestParam String descriptionCriteria, 
-			@RequestParam String eventMakerCriteria,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria1,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria2,
+	EventSearchResponseDto searchEvents(@RequestParam(required = false) String placeCriteria
+			,@RequestParam(required = false) String titleCriteria,
+			@RequestParam(required = false) String categoryCriteria, 
+			@RequestParam(required = false) String descriptionCriteria, 
+			@RequestParam(required = false) String eventMakerCriteria,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria1,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateCriteria2,
 			@RequestParam int pageRequested) {
 		return eventService.searchEvents(placeCriteria, titleCriteria, categoryCriteria,
 				descriptionCriteria, eventMakerCriteria, dateCriteria1, dateCriteria2, pageRequested);

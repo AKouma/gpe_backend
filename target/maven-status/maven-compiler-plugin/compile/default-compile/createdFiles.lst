@@ -2,6 +2,7 @@ com/etna/gpe/controller/CategoryController.class
 com/etna/gpe/controller/customexception/ResourceAlreadyExist.class
 com/etna/gpe/model/Community.class
 com/etna/gpe/repository/EventRepository.class
+com/etna/gpe/utils/EventUtils.class
 com/etna/gpe/config/JwtUserDetailsService.class
 com/etna/gpe/repository/ParticularRepository.class
 com/etna/gpe/controller/customexception/ParametersNotFound.class
