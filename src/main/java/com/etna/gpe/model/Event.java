@@ -22,6 +22,12 @@ public class Event {
 
 	@Column(name = "event_title", nullable = false)
 	private String eventTitle;
+	
+	@Column(name = "event_latitude")
+	private Long eventLatitude;
+	
+	@Column(name = "event_longitude")
+	private Long eventLongitude;
 
 	@Column(name = "event_description", length = 10000, nullable = false)
 	private String eventDescription;
@@ -81,6 +87,8 @@ public class Event {
 		this.setEventPlace(eventDto.getEventPlace());
 		this.setEventTitle(eventDto.getEventTitle());
 		this.setParticipants(eventDto.getParticipants());
+		this.setEventLatitude(eventDto.getLatitude());
+		this.setEventLongitude(eventDto.getLongitude());
 		this.setOrganizationsAsParticipants(eventDto.getOrganizationsAsParticipants());
 		this.setPicture(eventDto.getPicture());
 		if (eventDto.getEventUpdateDate() != null)
@@ -92,16 +100,18 @@ public class Event {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "Event [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventDescription=" + eventDescription
-				+ ", eventCreateDate=" + eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate="
-				+ eventDeleteDate + ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted="
-				+ eventIsDeleted + ", participants=" + participants + ", organizationsAsParticipants="
-				+ organizationsAsParticipants + ", eventMakerEmail=" + eventMakerEmail + ", community=" + community
-				+ ", category=" + category + ", picture=" + picture + "]";
+		return "Event [eventId=" + eventId + ", eventTitle=" + eventTitle + ", eventLatitude=" + eventLatitude
+				+ ", eventLongitude=" + eventLongitude + ", eventDescription=" + eventDescription + ", eventCreateDate="
+				+ eventCreateDate + ", eventUpdateDate=" + eventUpdateDate + ", eventDeleteDate=" + eventDeleteDate
+				+ ", eventPlace=" + eventPlace + ", eventDate=" + eventDate + ", eventIsDeleted=" + eventIsDeleted
+				+ ", participants=" + participants + ", organizationsAsParticipants=" + organizationsAsParticipants
+				+ ", eventMakerEmail=" + eventMakerEmail + ", community=" + community + ", category=" + category
+				+ ", picture=" + picture + "]";
 	}
-	
+
 	
 
 	@Override
@@ -116,6 +126,8 @@ public class Event {
 		result = prime * result + ((eventDescription == null) ? 0 : eventDescription.hashCode());
 		result = prime * result + eventId;
 		result = prime * result + (eventIsDeleted ? 1231 : 1237);
+		result = prime * result + ((eventLatitude == null) ? 0 : eventLatitude.hashCode());
+		result = prime * result + ((eventLongitude == null) ? 0 : eventLongitude.hashCode());
 		result = prime * result + ((eventMakerEmail == null) ? 0 : eventMakerEmail.hashCode());
 		result = prime * result + ((eventPlace == null) ? 0 : eventPlace.hashCode());
 		result = prime * result + ((eventTitle == null) ? 0 : eventTitle.hashCode());
@@ -168,6 +180,16 @@ public class Event {
 		if (eventId != other.eventId)
 			return false;
 		if (eventIsDeleted != other.eventIsDeleted)
+			return false;
+		if (eventLatitude == null) {
+			if (other.eventLatitude != null)
+				return false;
+		} else if (!eventLatitude.equals(other.eventLatitude))
+			return false;
+		if (eventLongitude == null) {
+			if (other.eventLongitude != null)
+				return false;
+		} else if (!eventLongitude.equals(other.eventLongitude))
 			return false;
 		if (eventMakerEmail == null) {
 			if (other.eventMakerEmail != null)
@@ -333,6 +355,22 @@ public class Event {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public Long getEventLatitude() {
+		return eventLatitude;
+	}
+
+	public void setEventLatitude(Long eventLatitude) {
+		this.eventLatitude = eventLatitude;
+	}
+
+	public Long getEventLongitude() {
+		return eventLongitude;
+	}
+
+	public void setEventLongitude(Long eventLongitude) {
+		this.eventLongitude = eventLongitude;
 	}
 
 }

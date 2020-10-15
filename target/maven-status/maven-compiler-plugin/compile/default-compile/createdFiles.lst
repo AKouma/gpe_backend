@@ -1,3 +1,4 @@
+com/etna/gpe/service/Tchatservice.class
 com/etna/gpe/controller/CategoryController.class
 com/etna/gpe/controller/customexception/ResourceAlreadyExist.class
 com/etna/gpe/model/Community.class
@@ -14,6 +15,7 @@ com/etna/gpe/model/Message.class
 com/etna/gpe/GpeBackendApplication.class
 com/etna/gpe/utils/StringUtils.class
 com/etna/gpe/model/Event.class
+com/etna/gpe/controller/TchatController.class
 com/etna/gpe/utils/DateUtils.class
 com/etna/gpe/controller/customexception/ServerError.class
 com/etna/gpe/service/OrganizationService.class
@@ -23,6 +25,7 @@ com/etna/gpe/dto/AuthenResponseDto.class
 com/etna/gpe/model/Particular.class
 com/etna/gpe/model/Category.class
 com/etna/gpe/repository/CommunityRepository.class
+com/etna/gpe/service/LocalizationService.class
 com/etna/gpe/controller/customexception/ResourceNotExist.class
 com/etna/gpe/dto/OrganizationDto.class
 com/etna/gpe/ServletInitializer.class
@@ -34,6 +37,7 @@ com/etna/gpe/dto/EventDto.class
 com/etna/gpe/controller/ParticularController.class
 com/etna/gpe/model/User$UserRole.class
 com/etna/gpe/model/Particular$PARTICULAR_CATEGORY.class
+com/etna/gpe/dto/MessageDto.class
 com/etna/gpe/repository/CategoryRepository.class
 com/etna/gpe/model/User.class
 com/etna/gpe/controller/OrganizationController.class

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class EventService {
 
 	@Autowired
 	CategoryRepository categoryRepository;
+	
+	@Autowired
+	LocalizationService localizationService;
 
 	public List<EventDto> getEventDtoListFromEventIterator(Iterator<Event> events) {
 		List<EventDto> eventDtoList;
@@ -120,6 +124,10 @@ public class EventService {
 				Community community = new Community();
 				community.setCommunityAdmin(dto.getEventMakerEmail());
 				event.setCommunity(community);
+				
+				Map<String, Long> latlong = localizationService.execute(event.getEventPlace());
+				event.setEventLatitude(latlong.getOrDefault(LocalizationService.LATITUDE, 0L));
+				event.setEventLongitude(latlong.getOrDefault(LocalizationService.LONGITUDE, 0L));
 			}
 			event = eventRepository.save(event);
 			if (event == null)

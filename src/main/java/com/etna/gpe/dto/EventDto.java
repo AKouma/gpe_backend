@@ -24,6 +24,8 @@ public class EventDto {
 	private CategoryDto category;
 	private String categoryName;
 	private String eventMakerEmail;
+	private Long longitude;
+	private Long latitude;
 	private String picture;
 	private List<Particular> participants;
 	private List<Organization> organizationsAsParticipants;
@@ -46,6 +48,8 @@ public class EventDto {
 		this.setParticipants(event.getParticipants());
 		this.setOrganizationsAsParticipants(event.getOrganizationsAsParticipants());
 		this.setPicture(event.getPicture());
+		this.setLongitude(event.getEventLongitude());
+		this.setLatitude(event.getEventLatitude());
 	}
 
 	public int getEventId() {
@@ -172,6 +176,22 @@ public class EventDto {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public Long getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Long longitude) {
+		this.longitude = longitude;
+	}
+
+	public Long getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Long latitude) {
+		this.latitude = latitude;
 	}
 	
 }

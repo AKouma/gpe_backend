@@ -1,3 +1,5 @@
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/MessageDto.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/LocalizationService.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/repository/CommunityRepository.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/pager/Pager.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Category.java
@@ -17,11 +19,13 @@
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/CategoryDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/JwtUserDetails.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtAuthenticationEntryPoint.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/Tchatservice.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/utils/StringUtils.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/service/ParticularService.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/model/Event.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/utils/Userutils.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtUserDetailsService.java
+/Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/controller/TchatController.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/OrganizationDto.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/config/JwtTokenUtil.java
 /Users/akoumare/Documents/projetEnta/gpe_backend/src/main/java/com/etna/gpe/dto/EventDto.java

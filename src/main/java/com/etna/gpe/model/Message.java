@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.etna.gpe.dto.MessageDto;
+
 @Entity
 @Table(name ="message")
 public class Message {
@@ -18,9 +20,6 @@ public class Message {
 	
 	@Column(name = "message_sender")
 	String messageSender;
-	
-	@Column(name = "message_receivers")
-	String messageReceivers;
 	
 	@Column(name = "message_create_date")
 	Date messageCreateDate;
@@ -40,6 +39,19 @@ public class Message {
 	@ManyToOne
 	@JoinColumn
 	Community community;
+	
+	public Message() {}
+	
+	public Message(MessageDto messageDto, Community community) {
+		if (community != null)
+			this.setCommunity(community);
+		this.setMessageCreateDate(messageDto.getMessageCreateDate());
+		this.setMessageValue(messageDto.getMessageValue());
+		this.setMessageSender(messageDto.getMessageSender());
+		this.setMessageUpdateDate(messageDto.getMessageUpdateDate());
+		this.setMessageIsDeleted(messageDto.isMessageIsDeleted());
+		this.setMessageIsReceived(messageDto.isMessageIsReceived());
+	}
 
 	public int getMessageId() {
 		return messageId;
@@ -63,14 +75,6 @@ public class Message {
 
 	public void setMessageSender(String messageSender) {
 		this.messageSender = messageSender;
-	}
-
-	public String getMessageReceivers() {
-		return messageReceivers;
-	}
-
-	public void setMessageReceivers(String messageReceivers) {
-		this.messageReceivers = messageReceivers;
 	}
 
 	public Date getMessageCreateDate() {
