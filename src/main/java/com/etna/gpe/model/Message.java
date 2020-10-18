@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.etna.gpe.dto.MessageDto;
 
 @Entity
@@ -21,9 +24,13 @@ public class Message {
 	@Column(name = "message_sender")
 	String messageSender;
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "message_create_date")
 	Date messageCreateDate;
 	
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "message_update_date")
 	Date messageUpdateDate;
 	
@@ -51,6 +58,7 @@ public class Message {
 		this.setMessageUpdateDate(messageDto.getMessageUpdateDate());
 		this.setMessageIsDeleted(messageDto.isMessageIsDeleted());
 		this.setMessageIsReceived(messageDto.isMessageIsReceived());
+		this.setMessageId(messageDto.getMessageId());
 	}
 
 	public int getMessageId() {

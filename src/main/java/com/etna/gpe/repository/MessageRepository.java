@@ -10,6 +10,6 @@ import com.etna.gpe.model.Message;
 public interface MessageRepository extends CrudRepository<Message, Integer>{
 	
     @Query("select m from Message m where m.community.communityId =:id and m.messageIsReceived =:1")
-    public List<Message> findMessageByCommunity(int id);
+    public List<Message> findMessageByCommunityCommunityId(int id);
 
 }

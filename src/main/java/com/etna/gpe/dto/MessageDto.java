@@ -6,7 +6,7 @@ import com.etna.gpe.model.Message;
 
 public class MessageDto {
 
-int messageId;
+	private int messageId;
 	
 	private String messageValue;
 	
@@ -36,6 +36,7 @@ int messageId;
 			this.setMessageUpdateDate(message.getMessageUpdateDate());
 			this.setMessageIsDeleted(message.isMessageIsDeleted());
 			this.setMessageIsReceived(message.isMessageIsReceived());
+			this.setMessageId(message.getMessageId());
 		}
 	}
 

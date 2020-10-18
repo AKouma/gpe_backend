@@ -40,20 +40,4 @@ public class TchatController {
 		return tchatservice.allMessage(communityId);
 	} 
 
-	/*
-	 * @GetMapping
-	 * 
-	 * @ResponseStatus(HttpStatus.OK) ParticularDto
-	 * getParticularByEmail(@RequestParam(value = "email") String email) { if (email
-	 * == null || email.isEmpty()) throw new ParametersNotFound(); return
-	 * particularService.getParticularByEmail(email); }
-	 * 
-	 * @GetMapping
-	 * 
-	 * @ResponseStatus(HttpStatus.RESET_CONTENT) void
-	 * deleteparticular(@RequestParam(value = "email") String email) { if (email ==
-	 * null || email.isEmpty()) throw new ParametersNotFound();
-	 * particularService.deleteParticular(email); }
-	 */
-
 }

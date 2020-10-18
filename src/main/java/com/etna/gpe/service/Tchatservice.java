@@ -37,7 +37,7 @@ public class Tchatservice {
 			Message message = new Message(messageDto, community);
 			messageRepository.save(message);
 			
-			List<Message> messages = messageRepository.findMessageByCommunity(community.getCommunityId());
+			List<Message> messages = messageRepository.findMessageByCommunityCommunityId(community.getCommunityId());
 					
 			for(Message m : messages) {
 				
@@ -51,7 +51,7 @@ public class Tchatservice {
 	public List<MessageDto> allMessage(int communityId) {
 		List<MessageDto> dto = new ArrayList<MessageDto>();
 			
-			List<Message> messages = messageRepository.findMessageByCommunity(communityId);
+			List<Message> messages = messageRepository.findMessageByCommunityCommunityId(communityId);
 					
 			for(Message m : messages) {
 				
