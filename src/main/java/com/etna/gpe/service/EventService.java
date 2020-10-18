@@ -125,9 +125,9 @@ public class EventService {
 				community.setCommunityAdmin(dto.getEventMakerEmail());
 				event.setCommunity(community);
 				
-				Map<String, Long> latlong = localizationService.execute(event.getEventPlace());
-				event.setEventLatitude(latlong.getOrDefault(LocalizationService.LATITUDE, 0L));
-				event.setEventLongitude(latlong.getOrDefault(LocalizationService.LONGITUDE, 0L));
+				Map<String, Double> latlong = localizationService.execute(event.getEventPlace());
+				event.setEventLatitude(latlong.getOrDefault(LocalizationService.LATITUDE, 0.00000D));
+				event.setEventLongitude(latlong.getOrDefault(LocalizationService.LONGITUDE, 0.00000D));
 			}
 			event = eventRepository.save(event);
 			if (event == null)

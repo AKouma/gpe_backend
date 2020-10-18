@@ -24,10 +24,10 @@ public class Event {
 	private String eventTitle;
 	
 	@Column(name = "event_latitude")
-	private Long eventLatitude;
+	private Double eventLatitude;
 	
 	@Column(name = "event_longitude")
-	private Long eventLongitude;
+	private Double eventLongitude;
 
 	@Column(name = "event_description", length = 10000, nullable = false)
 	private String eventDescription;
@@ -57,7 +57,7 @@ public class Event {
 	@Column(name = "event_is_deleted")
 	private boolean eventIsDeleted;
 
-	@OneToMany
+	@ManyToMany
 	private List<Particular> participants;
 	
 	@OneToMany
@@ -87,8 +87,8 @@ public class Event {
 		this.setEventPlace(eventDto.getEventPlace());
 		this.setEventTitle(eventDto.getEventTitle());
 		this.setParticipants(eventDto.getParticipants());
-		this.setEventLatitude(eventDto.getLatitude());
-		this.setEventLongitude(eventDto.getLongitude());
+		this.setEventLatitude(eventDto.getLat());
+		this.setEventLongitude(eventDto.getLng());
 		this.setOrganizationsAsParticipants(eventDto.getOrganizationsAsParticipants());
 		this.setPicture(eventDto.getPicture());
 		if (eventDto.getEventUpdateDate() != null)
@@ -357,19 +357,19 @@ public class Event {
 		this.picture = picture;
 	}
 
-	public Long getEventLatitude() {
+	public Double getEventLatitude() {
 		return eventLatitude;
 	}
 
-	public void setEventLatitude(Long eventLatitude) {
+	public void setEventLatitude(Double eventLatitude) {
 		this.eventLatitude = eventLatitude;
 	}
 
-	public Long getEventLongitude() {
+	public Double getEventLongitude() {
 		return eventLongitude;
 	}
 
-	public void setEventLongitude(Long eventLongitude) {
+	public void setEventLongitude(Double eventLongitude) {
 		this.eventLongitude = eventLongitude;
 	}
 

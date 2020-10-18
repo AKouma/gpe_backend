@@ -24,8 +24,8 @@ public class LocalizationService {
 	private String RESULTS = "results";
 	private String GEOMETRY = "geometry";
 
-	public Map<String, Long> execute(String address) {
-		Map<String, Long> lngLat = new HashMap<>();
+	public Map<String, Double> execute(String address) {
+		Map<String, Double> lngLat = new HashMap<>();
 		HttpResponse<String> response;
 		if (address != null && !address.isBlank()) {
 			address = address.replace(" ", "+");
@@ -42,8 +42,8 @@ public class LocalizationService {
 				JsonObject locateJson = new Gson().fromJson(response.body(), JsonObject.class);
 				locateJson = locateJson.get(RESULTS).getAsJsonArray().get(0).getAsJsonObject().get(GEOMETRY)
 						.getAsJsonObject().get(LOCATION).getAsJsonObject();
-				Long longitude = locateJson.get(LNG).getAsLong();
-				Long latitude = locateJson.get(LAT).getAsLong();
+				Double longitude = locateJson.get(LNG).getAsDouble();
+				Double latitude = locateJson.get(LAT).getAsDouble();
 
 				lngLat.put(LONGITUDE, longitude);
 				lngLat.put(LATITUDE, latitude);
